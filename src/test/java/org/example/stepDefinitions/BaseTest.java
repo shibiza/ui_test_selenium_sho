@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 
-public class BaseSteps {
+public class BaseTest {
     protected final WebDriver webDriver = new WebDriverFactory().getWebDriver();
 
     @Before

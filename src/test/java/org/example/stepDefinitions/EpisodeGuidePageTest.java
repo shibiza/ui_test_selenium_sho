@@ -4,19 +4,20 @@ import org.example.pageObject.pages.EpisodeGuidePage;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class EpisodeGuidePageTest extends BaseSteps {
+public class EpisodeGuidePageTest extends BaseTest {
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
-    String episodeTitle = "Homeland - Season 5 Episode 1, Separation Anxiety | SHOWTIME";
+    String colorRed = "#ff202c";
 
     @Test
-    public void episodePageIsLoaded() {
-        EpisodeGuidePage episodeGuidePageActual = episodeGuidePage.waitForPageLoadAndTitleContains();
-        Assert.assertEquals(episodeTitle, episodeGuidePageActual);
+    public void VerifyStartYourFreeTrialMarkRed() {
+        String red = episodeGuidePage.getColourOfStartYourFreeTrialNav();
+        Assert.assertEquals(red, colorRed);
     }
 
-    @Test
-    public void episodePageIsLoadedAndTitleContains(){
-        episodeGuidePage.waitForPageLoadAndTitleContains(episodeTitle);
-    }
+//    @Test
+//    public void verifyHamburgerMenu() {
+//        boolean isHamburgerManuClickable = episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu();
+//        Assert.assertEquals(true, isHamburgerManuClickable);
+//    }
 }

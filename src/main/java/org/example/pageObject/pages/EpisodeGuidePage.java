@@ -1,9 +1,9 @@
 package org.example.pageObject.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.interactions.Actions;
 
 public class EpisodeGuidePage extends StartPage {
 
@@ -11,32 +11,55 @@ public class EpisodeGuidePage extends StartPage {
         super(webDriver);
     }
 
-    String episodeGuidePageLink =  startPage + "/homeland/season/5/episode/1/separation-anxiety";
-    String episodeTitle = "Homeland - Season 5 Episode 1, Separation Anxiety | SHOWTIME";
+ //   WebElement startYourFreeTrialNav = webDriver.findElement(By.xpath("(//*[contains(@data-label,'Start Your Free Trial')])[1]"));
+    WebElement startYourFreeTrialNav = webDriver.findElement(By.xpath("/html/body/div[1]/nav/div[2]/ul[3]/li/a"));
+    WebElement hamburgerMenu = webDriver.findElement(By.xpath("//div[@class= 'global-nav__menu-toggle']"));
 
-    @FindBy(xpath = "//*[contains(@class, 'global-nav__menu-toggle')]")
-    private WebElement hamburgerMenu;
+    String series = "Series", movies = "Movies", sports = "Sports", documentaries = "Documentaries", freeFullEpisodes = "Free Full Episodes";
 
-    @FindBy(xpath = "//*[contains(@class, 'global-nav__link')]");
-    private WebElement startYourFreeTrialButton;
+    String episodeGuidePage = startPage + "/homeland/season/5/episode/1/separation-anxiety";
+    Actions builder = new Actions(webDriver);
 
-    public EpisodeGuidePage episodeGuidePage() {
-        webDriver.get(episodeGuidePageLink);
+    public EpisodeGuidePage openEpisodeGuidePage(){
+        webDriver.get(episodeGuidePage);
+        waitForVisibility(hamburgerMenu);
+        return this; //!!
+    }
+
+    public EpisodeGuidePage clickOnHamburgerMenu(){
+        webDriver.get(episodeGuidePage);
+        waitForVisibility(hamburgerMenu);
+        builder.moveToElement(hamburgerMenu).click().perform();
         return this;
     }
 
-//    public EpisodeGuidePage waitForPageLoadAndTitleContains() {
-//        webDriver.get(episodeGuidePageLink);
-//        waitForPageLoadAndTitleContains(episodeGuidePageLink);
-//        return this;
-//    }
-
-    public void waitForPageLoadAndTitleContains(String pageLink) {
-        wait.until(ExpectedConditions.titleContains(episodeTitle));
+    public String getColourOfStartYourFreeTrialNav() {
+        String colourOfStartYourFreeTrialNav = waitToBePresent(startYourFreeTrialNav).getCssValue("background-color");
+        return colourOfStartYourFreeTrialNav;
     }
+/*
+    public boolean verifyHamburgerMenuContainsItems(String brandName) {
+        boolean everyTitleContainsInputWord;
 
-//public void waitForPageLoadAndTitleContains(int timeout, String pageTitle) {
-//    wait.until(ExpectedConditions.titleContains(pageTitle));
-//}
+        while (true) {
+            waitForElementPresence(titleXpath);
+
+            everyTitleContainsInputWord = titlesList
+                    .stream()
+                    .map(WebElement::getText)
+                    .map(String::toLowerCase)
+                    .allMatch(e -> e.contains(brandName.toLowerCase()));
+
+            if(stopGoingThroughPages(everyTitleContainsInputWord, paginationNextBtn)){
+                break;
+            }
+
+            paginationNextBtn.click();
+        }
+        return everyTitleContainsInputWord;
+    }
+*/
+
+
 
 }

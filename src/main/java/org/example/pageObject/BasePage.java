@@ -1,6 +1,7 @@
 package org.example.pageObject;
 
 import org.example.Util;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -31,30 +32,8 @@ public class BasePage {
                 .until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitForPageLoadAndTitleContains(String pageTitle) {
-        wait.until(ExpectedConditions.titleContains(pageTitle));
+    protected WebElement waitToBePresent(WebElement element) throws Error{
+        return new WebDriverWait(webDriver,Duration.ofSeconds(5))
+                .until(ExpectedConditions.presenceOfElementLocated((By) element));
     }
-
-    //public void waitForPageLoadAndTitleContains(int timeout, String pageTitle) {
-    //    WebDriverWait wait = new WebDriverWait(driver, timeout, 1000);
-    //    wait.until(ExpectedConditions.titleContains(pageTitle));
-    //}
-
-
-    /*    protected static void waitForPageToLoad(String pageLink) {
-               waitForPageToLoad(PAGE_LOAD_TIMEOUT_SECONDS);       }      }
-
-
-    public static void waitForPageToLoad(int PAGE_LOAD_TIMEOUT_SECONDS) throws InterruptedException {
-        ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
-            @Override
-            public @Nullable Boolean apply(@Nullable WebDriver webDriver) {
-                return ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete");
-            }
-        };
-        webDriver.wait(PAGE_LOAD_TIMEOUT_SECONDS).until(pageLoadCondition);
-    }
-
-    private static final Logger logger = LoggerFactory.getLogger(BasePage.class);
- */
 }
