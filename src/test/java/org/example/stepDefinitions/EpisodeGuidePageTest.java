@@ -1,18 +1,19 @@
 package org.example.stepDefinitions;
 
 import org.example.pageObject.pages.EpisodeGuidePage;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
+
 
 public class EpisodeGuidePageTest extends BaseTest {
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
     String colorRed = "#ff202c";
 
-    @org.testng.annotations.Test
+    @Test
     public void VerifyStartYourFreeTrialMarkRed() {
         String red = episodeGuidePage.openEpisodeGuidePage().getColourOfStartYourFreeTrialNav();
-        org.testng.Assert.assertEquals(red, colorRed);
+        Assert.assertEquals(red, colorRed);
     }
 
     @Test

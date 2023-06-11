@@ -1,27 +1,19 @@
 package org.example.stepDefinitions;
 
-import org.example.pageObject.pages.EpisodeGuidePage;
 import org.example.pageObject.pages.HomelandSeries;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+
 
 public class HomelandSeriesTest extends BaseTest {
 
     HomelandSeries homelandSeries = new HomelandSeries(webDriver);
-
-//    @Test
-//    public void waitForHomelandSeriesPageLoadAndTitleContains() {
-//      boolean is = homelandSeries.openHomelandSeries();
-//
-//        Assert.assertTrue(is);
-//    }
-
+    String logo = "//a[@class=\"global-nav__logo\"]";
 
     @Test
-    public void pageIsLoaded(){
-        boolean isLoaded = homelandSeries.elementIsNotPresent("/html/head");
-        Assert.assertFalse(isLoaded);
+    public void pageLoadsAndLogoIsDisplayed() {
+        homelandSeries.openHomelandSeries();
+        Assert.assertTrue(webDriver.findElement(By.xpath(logo)).isDisplayed());
     }
-
 }
-
