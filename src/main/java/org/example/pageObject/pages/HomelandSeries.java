@@ -1,33 +1,54 @@
 package org.example.pageObject.pages;
 
+import org.example.pageObject.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HomelandSeries extends StartPage {
+public class HomelandSeries extends BasePage {
+
+    String startPageLink = "https://www.sho.com";
+    String homelandSeriesSeason5Link = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
+
+    @FindBy(xpath = "/html/head")
+    private WebElement titleTag;
+
+    @FindBy(className = "head")
+    private WebElement headTagAtPage;
+//
+//    protected HomelandSeries(WebDriver webDriver) {
+//        super(webDriver);
+//    }
+//
+//    protected boolean openHomelandSeries() {
+//        webDriver.get(homelandSeriesSeason5Link);
+//        wait.until(ExpectedConditions.visibilityOf(titleTag));
+//        return true;
+//    }
 
     public HomelandSeries(WebDriver webDriver) {
         super(webDriver);
     }
 
-    String homelandSeriesSeason5Link = startPage + "/homeland/season/5/episode/1/separation-anxiety";
-    String nextOnEpisode = startPage + "/video/38764/next-on-episode-1";
-    Actions builder = new Actions(webDriver);
-
-    @FindBy(tagName = "title")
-    private WebElement titleTag;
-
-    public HomelandSeries openHomelandSeriesPage(){
+    public String openHomelandSeriesAndFindHeadTitle() {
         webDriver.get(homelandSeriesSeason5Link);
-        waitToBePresent(titleTag);
-        return this;
+        wait.until(ExpectedConditions.visibilityOf(titleTag));
+
+        String headTag = titleTag.getCssValue("background-color");
+        return headTag;
     }
 
-    public boolean waitForHomelandSeriesPageLoadAndTitleContains() {
-        webDriver.get(homelandSeriesSeason5Link);
-        waitToBePresent(titleTag);
-        return (boolean) wait.until(ExpectedConditions.titleContains(String.valueOf(titleTag)));
+//    public boolean elementIsPresent() {
+//        webDriver.get(homelandSeriesSeason5Link);
+//        wait.until(ExpectedConditions.visibilityOf(titleTag));
+//
+//        return webDriver.findElement(By.tagName("body")).isEmpty();
+//    }
+
+    public boolean elementIsNotPresent(String xpath) {
+        return webDriver.findElements(By.xpath(xpath)).isEmpty();
     }
 }

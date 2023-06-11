@@ -14,7 +14,6 @@ public class BasePage {
 
     protected static WebDriver webDriver;
     protected WebDriverWait wait;
-    public static final int PAGE_LOAD_TIMEOUT_SECONDS = 500;
 
     protected BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
