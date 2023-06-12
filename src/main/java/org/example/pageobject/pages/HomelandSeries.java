@@ -1,6 +1,6 @@
-package org.example.pageObject.pages;
+package org.example.pageobject.pages;
 
-import org.example.pageObject.BasePage;
+import org.example.pageobject.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,17 +12,11 @@ public class HomelandSeries extends BasePage {
         super(webDriver);
     }
 
-    String startPageLink = "https://www.sho.com";
-    String homelandSeriesSeason5Link = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
+    private static final String startPageLink = "https://www.sho.com";
+    private static final String homelandSeriesSeason5Link = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
 
-   @FindBy(xpath = "//a[@class=\"global-nav__logo\"]")
+    @FindBy(xpath = "//a[@class=\"global-nav__logo\"]")
     private WebElement navigationLogo;
-
-//    @FindBy(xpath = "/html/head")
-//    private WebElement titleTag;
-//
-//    @FindBy(className = "head")
-//    private WebElement headTagAtPage;
 
     public HomelandSeries openHomelandSeries() {
         webDriver.get(homelandSeriesSeason5Link);

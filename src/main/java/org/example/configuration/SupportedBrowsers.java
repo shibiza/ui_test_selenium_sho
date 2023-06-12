@@ -10,7 +10,7 @@ public enum SupportedBrowsers {
     private final WebDriverInvoker webDriverInvoker;
 
     SupportedBrowsers(LocalChromeInvoker webDriverInvoker) {
-        this.webDriverInvoker = (WebDriverInvoker) webDriverInvoker;
+        this.webDriverInvoker = webDriverInvoker;
     }
 
     public WebDriver getWebDriver() {

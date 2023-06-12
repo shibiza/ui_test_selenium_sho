@@ -1,6 +1,6 @@
 package org.example.stepDefinitions;
 
-import org.example.pageObject.pages.VideoPage;
+import org.example.pageobject.pages.VideoPage;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;

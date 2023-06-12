@@ -1,6 +1,6 @@
 package org.example.stepDefinitions;
 
-import org.example.pageObject.pages.HomelandSeries;
+import org.example.pageobject.pages.HomelandSeries;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;

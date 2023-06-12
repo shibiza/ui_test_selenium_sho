@@ -1,4 +1,4 @@
-package org.example.pageObject;
+package org.example.pageobject;
 
 import org.example.Util;
 import org.openqa.selenium.By;
@@ -12,7 +12,7 @@ import java.time.Duration;
 
 public class BasePage {
 
-    protected static WebDriver webDriver;
+    protected WebDriver webDriver;
     protected WebDriverWait wait;
 
     protected BasePage(WebDriver webDriver) {
@@ -21,21 +21,18 @@ public class BasePage {
         PageFactory.initElements(webDriver, this);
     }
 
-    protected WebElement waitForVisibility(WebElement element) throws Error {
+    protected WebElement waitForVisibility(WebElement element) {
         return new WebDriverWait(webDriver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
-    protected WebElement waitForClickable(WebElement element) throws Error {
+    protected WebElement waitForClickable(WebElement element) {
         return new WebDriverWait(webDriver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    protected WebElement waitToBePresent(WebElement element) throws Error{
-        return new WebDriverWait(webDriver,Duration.ofSeconds(5))
+    protected WebElement waitToBePresent(WebElement element) {
+        return new WebDriverWait(webDriver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.presenceOfElementLocated((By) element));
-    }
-    protected WebElement findElement(By by){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 }
