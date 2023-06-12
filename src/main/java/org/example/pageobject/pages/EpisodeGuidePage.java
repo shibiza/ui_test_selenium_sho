@@ -58,16 +58,14 @@ public class EpisodeGuidePage extends BasePage {
     public boolean elementIsPresent(String xPath) {
         return webDriver.findElement(By.xpath(xPath)).isDisplayed();
     }
-    //"//div[@class='global-nav__menu-icon']")).isDisplayed();
-
 
     public List<String> hamburgerMenuContainsItems() {
-        List<WebElement> actualItemsOnHamburgerMenu =  webDriver
-                .findElements(By.xpath("//a[contains(@class, 'global-nav__link') and @data-location= 'primary']"));
+        List<WebElement> actualItemsOnHamburgerMenu = webDriver
+                .findElements(By.xpath("//a[@class='global-nav__link' and @data-location= 'primary']"));
         List<String> menuTextList =
                 actualItemsOnHamburgerMenu.stream()
-                        .map(e -> e.getText()).collect(Collectors.toList());
-        //   System.out.println(menuTextList);
+                        .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
+
         return menuTextList;
     }
 
@@ -76,4 +74,3 @@ public class EpisodeGuidePage extends BasePage {
         return startYourFreeTrialNav.getCssValue("background-color");
     }
 }
-

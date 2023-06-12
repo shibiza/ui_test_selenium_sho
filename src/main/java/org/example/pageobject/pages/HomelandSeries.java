@@ -18,9 +18,9 @@ public class HomelandSeries extends BasePage {
     @FindBy(xpath = "//a[@class=\"global-nav__logo\"]")
     private WebElement navigationLogo;
 
-    public HomelandSeries openHomelandSeries() {
+    public boolean openHomelandSeries() {
         webDriver.get(homelandSeriesSeason5Link);
         wait.until(ExpectedConditions.visibilityOf(navigationLogo));
-        return this;
+        return navigationLogo.isDisplayed();
     }
 }

@@ -18,13 +18,19 @@ public class VideoPage extends BasePage {
     @FindBy(xpath = "//div[@class=\"vjs-poster\"]")
     private WebElement videoPlayer;
 
-    public void openVideoPage() {
+    public VideoPage openVideoPage() {
         webDriver.get(videoPageLink);
         wait.until(ExpectedConditions.visibilityOf(videoPlayer));
+        return this;
+    }
+
+    public boolean openVideoPageAndVideoPreview() {
+        return videoPlayer.isDisplayed();
     }
 
     public boolean videoPlayerAutoPlay() {
         waitForClickable(videoPlayer);
+        System.out.println(videoPlayer.getText());
         return videoPlayer.getText().contains("vjs-playing");
     }
 }
