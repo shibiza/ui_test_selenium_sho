@@ -8,12 +8,17 @@ import org.openqa.selenium.By;
 public class VideoPlayerTest extends BaseTest {
 
     VideoPage videoPage = new VideoPage(webDriver);
-
-    String logo = "//div[@class=\"vjs-poster\"]";
+    String videoPlayer = "//div[@class=\"vjs-poster\"]";
 
     @Test
-    public void ope() {
+    public void openVideoPlayer() {
         videoPage.openVideoPage();
-        Assert.assertTrue(webDriver.findElement(By.xpath(logo)).isDisplayed());
+        Assert.assertTrue(webDriver.findElement(By.xpath(videoPlayer)).isDisplayed());
+    }
+
+    @Test
+    public void videoAutoPlays() {
+        videoPage.openVideoPage();
+        Assert.assertTrue(videoPage.videoPlayerAutoPlay());
     }
 }

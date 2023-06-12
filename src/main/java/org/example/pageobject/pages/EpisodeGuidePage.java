@@ -62,7 +62,7 @@ public class EpisodeGuidePage extends BasePage {
 
 
     public List<String> hamburgerMenuContainsItems() {
-        List<WebElement> actualItemsOnHamburgerMenu = webDriver
+        List<WebElement> actualItemsOnHamburgerMenu =  webDriver
                 .findElements(By.xpath("//a[contains(@class, 'global-nav__link') and @data-location= 'primary']"));
         List<String> menuTextList =
                 actualItemsOnHamburgerMenu.stream()
@@ -73,15 +73,7 @@ public class EpisodeGuidePage extends BasePage {
 
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
-        return webDriver.findElement(By.xpath("//a[@data-label= 'Start Your Free Trial']"))
-                .getCssValue("background-color");
+        return startYourFreeTrialNav.getCssValue("background-color");
     }
 }
-
-// // Проверьте, является ли элемент гиперссылкой
-//        if (element.getTagName().equalsIgnoreCase("a")) {
-//            System.out.println("Элемент является гиперссылкой");
-//        } else {
-//            System.out.println("Элемент не является гиперссылкой");
-//        }
 
