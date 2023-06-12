@@ -11,20 +11,22 @@ public class EpisodeGuidePageTest extends BaseTest {
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
     String expectedColorRed = "#ff202c";
+
+
     //   ArrayList<WebElement> expectedItemsOnHamburgerMenu = new ArrayList<>(List.of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
 
-    @Test
-    public void hamburgerMenuHasItems() {
-        ArrayList<String> expectedItemsOnHamburgerMenu;
-        Assert.assertTrue();
-    }
+//    @Test
+//    public void hamburgerMenuHasItems() {
+//        ArrayList<String> expectedItemsOnHamburgerMenu;
+//        Assert.assertTrue();
+//    }
 
     @Test
     public void VerifyStartYourFreeTrialMarkRed() {
         episodeGuidePage.openEpisodeGuidePage();
         String actualRed = episodeGuidePage.getColourOfStartYourFreeTrialNav();
 
-        Assert.assertEquals(actualRed, expectedColorRed);
+        Assert.assertEquals(expectedColorRed, actualRed);
     }
 
 //    @Test
