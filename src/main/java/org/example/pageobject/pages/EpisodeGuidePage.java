@@ -27,6 +27,12 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(xpath = "//a[@data-label= 'Start Your Free Trial']")
     private WebElement startYourFreeTrialNav;
 
+    @FindBy(xpath = "//a[@class=\"button--primary cta--item\"]")
+    private WebElement streamThisEpisodeButton;
+
+    @FindBy(xpath = "//a[@class=\"button--secondary cta--item button--video\"]")
+    private WebElement watchPreviewButton;
+
     Actions builder = new Actions(webDriver);
 
     public EpisodeGuidePage(WebDriver webDriver) {
@@ -49,48 +55,28 @@ public class EpisodeGuidePage extends BasePage {
         return new EpisodeGuidePage(webDriver);
     }
 
+    public boolean elementIsPresent(String xPath) {
+        return webDriver.findElement(By.xpath(xPath)).isDisplayed();
+    }
+    //"//div[@class='global-nav__menu-icon']")).isDisplayed();
+
+
     public List<String> hamburgerMenuContainsItems() {
         List<WebElement> actualItemsOnHamburgerMenu = webDriver
-                .findElements(By.xpath("//a[@class= 'global-nav__link' and @data-location= 'primary']"));
+                .findElements(By.xpath("//a[contains(@class, 'global-nav__link') and @data-location= 'primary']"));
         List<String> menuTextList =
                 actualItemsOnHamburgerMenu.stream()
                         .map(e -> e.getText()).collect(Collectors.toList());
-        System.out.println(menuTextList);
+        //   System.out.println(menuTextList);
         return menuTextList;
     }
-//
-//    private void validateListItems(WebElement menuTextList, List<String> expectedItems) {
-//
-//        //   List<WebElement> hamburgerMenuIitems = webDriver.findElements(elementsInsideHamburgerMenu);
-//
-//        // Validate each item
-//        for (int i = 0; i < menuTextList.size(); i++) {
-//            WebElement item = menuTextList.get(i);
-//            String itemText = item.getText();
-//            String expectedItem = expectedItems.get(i);
-//
-//            // Compare the actual item text with the expected item
-//            if (!itemText.equals(expectedItem)) {
-//                System.out.println("Item at index " + i + " does not match the expected value.");
-//                return;
-//            }
-//        }
-//    }
 
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
         return webDriver.findElement(By.xpath("//a[@data-label= 'Start Your Free Trial']"))
                 .getCssValue("background-color");
     }
-
-    public boolean elementIsPresent() {
-        return webDriver.findElement(By.xpath("//div[@class='global-nav__menu-icon']")).isDisplayed();
-    }
 }
-//public boolean elementIsNotPresent(String xpath){
-//       return driver.findElements(By.xpath(xpath)).isEmpty();
-//
-//}
 
 // // Проверьте, является ли элемент гиперссылкой
 //        if (element.getTagName().equalsIgnoreCase("a")) {

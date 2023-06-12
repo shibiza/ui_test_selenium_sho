@@ -5,21 +5,37 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class EpisodeGuidePageTest extends BaseTest {
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
-    String expectedColorRed = "#ff202c";
+    String expectedColorRed = "rgba(255, 32, 44, 1)";
 
+    ArrayList<String> expectedItemsOnHamburgerMenu = new ArrayList<>(List.
+            of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
 
-    //   ArrayList<WebElement> expectedItemsOnHamburgerMenu = new ArrayList<>(List.of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
+    String streamThisEpisodeButton = "//a[@class=\"button--primary cta--item\"]";
+    String watchPreviewButton = "//a[@class=\"button--secondary cta--item button--video\"]";
 
-//    @Test
-//    public void hamburgerMenuHasItems() {
-//        ArrayList<String> expectedItemsOnHamburgerMenu;
-//        Assert.assertTrue();
-//    }
+    @Test
+    public void hamburgerMenuHasItems() {
+        episodeGuidePage.openEpisodeGuidePage()
+                .clickOnHamburgerMenu();
+        ArrayList<String> actualItemsHamburgerMenu = (ArrayList<String>) episodeGuidePage.hamburgerMenuContainsItems();
+        System.out.println(actualItemsHamburgerMenu);
+
+        Assert.assertTrue(actualItemsHamburgerMenu.equals(expectedItemsOnHamburgerMenu));
+    }
+
+    @Test
+    public void closeHamburgerMenu() {
+        episodeGuidePage.openEpisodeGuidePage()
+                .clickOnHamburgerMenu()
+                .closeHamburgerMenu();
+
+        Assert.assertTrue(true);
+    }
 
     @Test
     public void VerifyStartYourFreeTrialMarkRed() {
@@ -29,14 +45,18 @@ public class EpisodeGuidePageTest extends BaseTest {
         Assert.assertEquals(expectedColorRed, actualRed);
     }
 
-//    @Test
-//    public void closeHamburgerMenu() {
-//       episodeGuidePage.openEpisodeGuidePage()
-//              .clickOnHamburgerMenu()
-//              .closeHamburgerMenu();
+    @Test
+    public void streamThisEpisodeAndWatchPreviewButtons() {
+        episodeGuidePage.openEpisodeGuidePage();
+        boolean actualStreamButton = episodeGuidePage.elementIsPresent(streamThisEpisodeButton);
+        boolean actualWatchPreview = episodeGuidePage.elementIsPresent(watchPreviewButton);
+        boolean test = false;
+        if (actualWatchPreview == true && actualStreamButton == true) {
+            test = true;
+        }
+        Assert.assertTrue(test);
+    }
 //
-//        Assert.assertTrue(true);
-//    }
 //    @Test
 //    public void verifyHamburgerMenu() {
 //        boolean isHamburgerManuClickable = episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu();
