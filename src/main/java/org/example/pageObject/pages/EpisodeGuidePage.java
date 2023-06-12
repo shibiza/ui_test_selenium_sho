@@ -8,20 +8,37 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+
 public class EpisodeGuidePage extends BasePage {
     String startPageLink = "https://www.sho.com";
     String episodeGuidePage = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
     Actions builder = new Actions(webDriver);
     String nextOnEpisode = startPageLink + "/video/38764/next-on-episode-1";
 
-    @FindBy(xpath = "(//a[@class= 'global-nav__link'])[4]")
-    private WebElement startYourFreeTrialNav;
+    By startYourFreeTrialNav = By.xpath("(//a[@class= 'global-nav__link'])[4]");
+    By elementsInsideHamburgerMenu = By.xpath("//a[@class= 'global-nav__link' and @data-location= 'primary']");
+
+//    @FindBy(xpath = "(//a[@class= 'global-nav__link'])[4]")
+//    private WebElement startYourFreeTrialNav;
+
 
     @FindBy(xpath = "//div[@class= 'global-nav__menu-toggle']")
     private WebElement hamburgerMenu;
 
     @FindBy(xpath = "//div[@class='global-nav__menu-icon'] ")
     private WebElement closeHamburgerMenu;
+
+//    @FindBy(xpath = "//a[@class= 'global-nav__link' and @data-location= 'primary']")
+//    private WebElement elementsInsideHamburgerMenu;
+
+
+    //<a class="global-nav__link" data-track="" data-location="primary" data-label="Series" href="/series">Series</a>
+    //    <a class="global-nav__link" data-track="" data-location="primary" data-label="Movies" href="/movies">Movies</a>
+    //    <a class="global-nav__link" data-track="" data-location="primary" data-label="Sports" href="/sports">Sports</a>
+    //<a class="global-nav__link" data-track="" data-location="primary" data-label="Documentaries" href="/documentaries">Documentaries</a>
+    //  <a class="global-nav__link" data-track="" data-location="primary" data-label="Free Full Episodes" href="/video/full-episodes">Free Full Episodes</a>
+
 
     public EpisodeGuidePage(WebDriver webDriver) {
         super(webDriver);
@@ -33,36 +50,26 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage clickOnHamburgerMenu() {
-        webDriver.get(episodeGuidePage);
         wait.until(ExpectedConditions.visibilityOf(hamburgerMenu));
         builder.moveToElement(hamburgerMenu).click().perform();
         return this;
     }
 
-    public boolean openCloseHamMenu() {
-        webDriver.get(episodeGuidePage);
-        wait.until(ExpectedConditions.visibilityOf(hamburgerMenu));
-        builder.moveToElement(hamburgerMenu).click().perform();
+    public EpisodeGuidePage closeHamburgerMenu() {
         builder.moveToElement(closeHamburgerMenu).click().perform();
-        return webDriver.findElement((By) closeHamburgerMenu).isEnabled();
+        return new EpisodeGuidePage(webDriver);
+    }
+
+    public boolean hamburgerMenuContainsItems(ArrayList<String> expectedItemsOnHamburgerMenu) {
+        ArrayList<WebElement> actualItemsOnHamburgerMenu = new ArrayList<WebElement>();
+        actualItemsOnHamburgerMenu.addAll(webDriver.findElements(elementsInsideHamburgerMenu));
+
+        return expectedItemsOnHamburgerMenu.equals(actualItemsOnHamburgerMenu);
     }
 
     public String getColourOfStartYourFreeTrialNav() {
-        webDriver.get(episodeGuidePage);
-        wait.until(ExpectedConditions.visibilityOf(hamburgerMenu));
-
-        String colourOfStartYourFreeTrialNav = startYourFreeTrialNav.getCssValue("background-color");
-        return colourOfStartYourFreeTrialNav;
+        return findElement(startYourFreeTrialNav).getCssValue("background-color");
     }
-//    String series = "Series", movies = "Movies", sports = "Sports", documentaries = "Documentaries", freeFullEpisodes = "Free Full Episodes";
-//    Series
-//            <a class="global-nav__link global-nav__flyout global-nav__flyout--series-drawer"data-track=""data-location="primary"data-label="Series">Series</a>
-//
-//    public String getMovies() {
-//        <a class="global-nav__link" data - track = "" data - location = "primary" data - label = "Movies"
-//        href = "/movies" > Movies </a >
-//    }
-
 
     //public boolean elementIsNotPresent(String xpath){
     //       return driver.findElements(By.xpath(xpath)).isEmpty();

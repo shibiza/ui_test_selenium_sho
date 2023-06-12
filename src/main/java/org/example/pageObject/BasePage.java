@@ -35,4 +35,7 @@ public class BasePage {
         return new WebDriverWait(webDriver,Duration.ofSeconds(5))
                 .until(ExpectedConditions.presenceOfElementLocated((By) element));
     }
+    protected WebElement findElement(By by){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
 }
