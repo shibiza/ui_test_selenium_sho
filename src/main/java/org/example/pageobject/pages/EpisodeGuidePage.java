@@ -73,11 +73,23 @@ public class EpisodeGuidePage extends BasePage {
     public List<String> hamburgerMenuContainsItems() {
         List<WebElement> actualItemsOnHamburgerMenu = webDriver
                 .findElements(By.xpath("//a[@class='global-nav__link' and @data-location= 'primary']"));
-        List<String> menuTextList =
-                actualItemsOnHamburgerMenu.stream()
-                        .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
+
+        List<String> menuTextList = actualItemsOnHamburgerMenu.stream()
+                .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
 
         return menuTextList;
+    }
+
+    public List<String> itemsFromHamburgerMenuAreHyperlinks() {
+        List<WebElement> actualItemsOnHamburgerMenu = webDriver
+                .findElements(By.xpath("//a[@class='global-nav__link' and @data-location= 'primary']"));
+
+        List<String> elementsAreHyperlinks = actualItemsOnHamburgerMenu.stream()
+                .filter(e -> e.getAttribute("href") != null && !e.getAttribute("href").isEmpty())
+                .map(e -> e.getAttribute("href"))
+                .collect(Collectors.toList());
+
+        return elementsAreHyperlinks;
     }
 
     public String getColourOfStartYourFreeTrialNav() {

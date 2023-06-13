@@ -23,7 +23,8 @@ public class EpisodeGuideTest extends BaseTest {
 
     ArrayList<String> expectedItemsOnHamburgerMenu = new ArrayList<>(List.
             of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
-
+    ArrayList<String> expectedElementsAreHyperLinks = new ArrayList<>(List.
+            of("Movies", "Sports", "Documentaries", "Free Full Episodes"));
     @Test
     public void hamburgerMenuHasItems() {
         episodeGuidePage.openEpisodeGuidePage()
@@ -32,6 +33,18 @@ public class EpisodeGuideTest extends BaseTest {
         System.out.println(actualItemsHamburgerMenu);
 
         Assert.assertTrue(actualItemsHamburgerMenu.equals(expectedItemsOnHamburgerMenu));
+    }
+
+    @Test
+    public void itemsFromHamburgerMenuAreHyperlinksExceptSeries() {
+        episodeGuidePage.openEpisodeGuidePage()
+                .clickOnHamburgerMenu();
+        ArrayList<String> actualElementsAreHyperLinks = (ArrayList<String>) episodeGuidePage
+                .itemsFromHamburgerMenuAreHyperlinks();
+        System.out.println(actualElementsAreHyperLinks);
+
+    //    Assert.assertTrue(true);
+      Assert.assertTrue(actualElementsAreHyperLinks.containsAll(expectedElementsAreHyperLinks));
     }
 
     @Test
