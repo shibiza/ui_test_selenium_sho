@@ -86,7 +86,7 @@ public class EpisodeGuidePage extends BasePage {
 
         List<String> elementsAreHyperlinks = actualItemsOnHamburgerMenu.stream()
                 .filter(e -> e.getAttribute("href") != null && !e.getAttribute("href").isEmpty())
-                .map(e -> e.getAttribute("href"))
+                .map(e -> e.getAttribute("data-label"))
                 .collect(Collectors.toList());
 
         return elementsAreHyperlinks;
