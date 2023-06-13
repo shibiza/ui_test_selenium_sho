@@ -33,6 +33,21 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(xpath = "//a[@class=\"button--secondary cta--item button--video\"]")
     private WebElement watchPreviewButton;
 
+    @FindBy(xpath = "//h2[@class= 'streaming-modal__headline']")
+    private WebElement startFreeTrialPopupHeadline;
+
+    @FindBy(xpath = "//a[@class= 'modal__close']")
+    private WebElement closeStartFreeTrialPopupModule;
+
+    @FindBy(xpath = "//a[@class= 'streaming-modal__button']")
+    private WebElement onPopupModuleButton;
+
+    @FindBy(id = "ot-sdk-btn")
+    private WebElement manageCookiesBtn;
+
+    @FindBy(id = "onetrust-accept-btn-handler")
+    private WebElement acceptCookiesBtn;
+
     Actions builder = new Actions(webDriver);
 
     public EpisodeGuidePage(WebDriver webDriver) {
@@ -55,10 +70,6 @@ public class EpisodeGuidePage extends BasePage {
         return new EpisodeGuidePage(webDriver);
     }
 
-    public boolean elementIsPresent(String xPath) {
-        return webDriver.findElement(By.xpath(xPath)).isDisplayed();
-    }
-
     public List<String> hamburgerMenuContainsItems() {
         List<WebElement> actualItemsOnHamburgerMenu = webDriver
                 .findElements(By.xpath("//a[@class='global-nav__link' and @data-location= 'primary']"));
@@ -73,4 +84,31 @@ public class EpisodeGuidePage extends BasePage {
         waitForVisibility(startYourFreeTrialNav);
         return startYourFreeTrialNav.getCssValue("background-color");
     }
+
+    public boolean elementIsPresent(String xPath) {
+        return webDriver.findElement(By.xpath(xPath)).isDisplayed();
+    }
+
+    public EpisodeGuidePage clickOnStreamThisEpisode() {
+        waitForClickable(streamThisEpisodeButton);
+        builder.moveToElement(streamThisEpisodeButton).click().perform();
+
+        return this;
+    }
+
+    public boolean startStreamingThisEpisode() {
+        wait.until(ExpectedConditions.visibilityOf(onPopupModuleButton));
+        boolean isPopupDisplayed = onPopupModuleButton.isDisplayed();
+
+        return isPopupDisplayed;
+    }
+
+    public EpisodeGuidePage acceptAllCookies() {
+        wait.until(ExpectedConditions.visibilityOf(acceptCookiesBtn));
+        waitForClickable(acceptCookiesBtn);
+        acceptCookiesBtn.click();
+        webDriver.navigate().refresh();
+        return new EpisodeGuidePage(webDriver);
+    }
+
 }
