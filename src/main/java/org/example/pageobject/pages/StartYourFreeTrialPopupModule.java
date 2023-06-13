@@ -28,4 +28,6 @@ public class StartYourFreeTrialPopupModule extends BasePage {
         waitForClickable(closeStartFreeTrialPopupModule).click();
         return new EpisodeGuidePage(webDriver);
     }
+
+
 }

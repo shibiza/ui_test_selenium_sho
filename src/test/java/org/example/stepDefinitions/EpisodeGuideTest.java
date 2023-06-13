@@ -11,7 +11,7 @@ import java.util.List;
 public class EpisodeGuideTest extends BaseTest {
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
-     StartYourFreeTrialPopupModule startYourFreeTrialPopupModule = new StartYourFreeTrialPopupModule(webDriver);
+    StartYourFreeTrialPopupModule startYourFreeTrialPopupModule = new StartYourFreeTrialPopupModule(webDriver);
 
     String expectedColorRed = "rgba(255, 32, 44, 1)";
     /*     The difference between #ff202c and rgba(255, 32, 44, 1) lies in the representation of color in CSS,
@@ -25,6 +25,7 @@ public class EpisodeGuideTest extends BaseTest {
             of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
     ArrayList<String> expectedElementsAreHyperLinks = new ArrayList<>(List.
             of("Movies", "Sports", "Documentaries", "Free Full Episodes"));
+
     @Test
     public void hamburgerMenuHasItems() {
         episodeGuidePage.openEpisodeGuidePage()
@@ -43,19 +44,15 @@ public class EpisodeGuideTest extends BaseTest {
                 .itemsFromHamburgerMenuAreHyperlinks();
         System.out.println(actualElementsAreHyperLinks);
 
-    //    Assert.assertTrue(true);
-      Assert.assertTrue(actualElementsAreHyperLinks.containsAll(expectedElementsAreHyperLinks));
+        //    Assert.assertTrue(true);
+        Assert.assertTrue(actualElementsAreHyperLinks.containsAll(expectedElementsAreHyperLinks));
     }
 
     @Test
     public void closeHamburgerMenu() {
-        episodeGuidePage.openEpisodeGuidePage()
-                .clickOnHamburgerMenu()
-                .closeHamburgerMenu();
-/////!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Assert.assertTrue(true);
+        episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu();
+        boolean shouldBeFalse = episodeGuidePage.closeHamburgerMenu();
+        Assert.assertFalse(shouldBeFalse);
     }
 
     @Test
@@ -84,5 +81,16 @@ public class EpisodeGuideTest extends BaseTest {
         episodeGuidePage.clickOnStreamThisEpisode();
         boolean openPopupModule = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
         Assert.assertTrue(openPopupModule);
+    }
+
+    @Test
+    public void closePopupModule() {
+        episodeGuidePage.openEpisodeGuidePage();
+        episodeGuidePage.clickOnStreamThisEpisode();
+        episodeGuidePage.visibilityOfPopupModule();
+        startYourFreeTrialPopupModule.closeStartYourFreeTrialPopupModule();
+
+        boolean shouldBeFalse = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
+        Assert.assertFalse(shouldBeFalse);
     }
 }

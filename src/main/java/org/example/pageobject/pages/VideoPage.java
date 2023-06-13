@@ -17,10 +17,9 @@ public class VideoPage extends BasePage {
 
     @FindBy(xpath = "//div[contains(@class, 'video-playr__video__embed')]")
     private WebElement videoPlayer;
-    //video-playr__video__embed video-js vjs-controls-enabled vjs-workinghover vjs-v7
-    // vjs-layout-large bc-player-NzCF8EByd_default bc-player-NzCF8EByd_default-index-0 vjs-mouse vjs-dock
-    // vjs-plugins-ready vjs-player-info
-    // vjs-contextmenu vjs-contextmenu-ui vjs-errors vjs-has-started vjs-paused not-hover vjs-user-inactive
+
+    @FindBy(partialLinkText = "vjs-play-control vjs-control vjs-button vjs-paused")
+    private WebElement playVideoBtn;
 
     public VideoPage openVideoPage() {
         webDriver.get(videoPageLink);
@@ -38,8 +37,9 @@ public class VideoPage extends BasePage {
         return videoPlayer.getText().contains("vjs-playing");
     }
 
-    public WebElement justTryToPrintWebElement() {
-        WebElement w = videoPlayer;
-        return w;
+    public boolean pressPlayVideo() {
+        waitForClickable(playVideoBtn);
+        playVideoBtn.click();
+        return playVideoBtn.isDisplayed();
     }
 }

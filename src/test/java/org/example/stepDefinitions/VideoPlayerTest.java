@@ -21,6 +21,12 @@ public class VideoPlayerTest extends BaseTest {
         Assert.assertTrue(videoPage.videoPlayerAutoPlay());
     }
 
+    @Test
+    public void pressPlayVideo(){
+        videoPage.openVideoPage();
+        Assert.assertFalse(videoPage.pressPlayVideo());
+    }
+
 //    @Test
 //    public void justTryTest(){
 //        videoPage.openVideoPage().openVideoPageAndVideoPreview();

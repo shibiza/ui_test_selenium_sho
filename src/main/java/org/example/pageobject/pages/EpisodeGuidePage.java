@@ -21,7 +21,8 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(xpath = "//div[@class= 'global-nav__menu-toggle']")
     private WebElement hamburgerMenu;
 
-    @FindBy(xpath = "//div[@class='global-nav__menu-icon']")
+    //  @FindBy(xpath = "//div[@class='global-nav__menu-icon' and @data-label='menu close']")
+    @FindBy(css = ".global-nav--open .global-nav__inner .global-nav__menu-toggle span:nth-child(3)")
     private WebElement closeHamburgerMenu;
 
     @FindBy(xpath = "//a[@data-label= 'Start Your Free Trial']")
@@ -65,11 +66,6 @@ public class EpisodeGuidePage extends BasePage {
         return this;
     }
 
-    public EpisodeGuidePage closeHamburgerMenu() {
-        builder.moveToElement(closeHamburgerMenu).click();
-        return new EpisodeGuidePage(webDriver);
-    }
-
     public List<String> hamburgerMenuContainsItems() {
         List<WebElement> actualItemsOnHamburgerMenu = webDriver
                 .findElements(By.xpath("//a[@class='global-nav__link' and @data-location= 'primary']"));
@@ -92,6 +88,17 @@ public class EpisodeGuidePage extends BasePage {
         return elementsAreHyperlinks;
     }
 
+    public boolean closeHamburgerMenu() {
+        builder.moveToElement(closeHamburgerMenu).click().perform();
+        boolean isClickable = closeHamburgerMenu.isEnabled();
+
+        if (isClickable) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
         return startYourFreeTrialNav.getCssValue("background-color");
@@ -104,14 +111,12 @@ public class EpisodeGuidePage extends BasePage {
     public EpisodeGuidePage clickOnStreamThisEpisode() {
         waitForClickable(streamThisEpisodeButton);
         builder.moveToElement(streamThisEpisodeButton).click().perform();
-
         return this;
     }
 
-    public boolean startStreamingThisEpisode() {
+    public boolean visibilityOfPopupModule() {
         wait.until(ExpectedConditions.visibilityOf(onPopupModuleButton));
         boolean isPopupDisplayed = onPopupModuleButton.isDisplayed();
-
         return isPopupDisplayed;
     }
 
