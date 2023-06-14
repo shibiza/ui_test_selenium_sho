@@ -1,13 +1,18 @@
 package org.example.stepDefinitions;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.pageobject.pages.EpisodeGuidePage;
 import org.example.pageobject.pages.StartYourFreeTrialPopupModule;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class EpisodeGuideTest extends BaseTest {
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
@@ -50,9 +55,11 @@ public class EpisodeGuideTest extends BaseTest {
 
     @Test
     public void closeHamburgerMenu() {
-        episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu().clickCloseHamburgerMenu();
-        boolean shouldBeFalse = episodeGuidePage.closeHamburgerMenu();
-        Assert.assertFalse(shouldBeFalse);
+        episodeGuidePage.openEpisodeGuidePage()
+                .acceptAllCookies()
+                .clickOnHamburgerMenu().clickCloseHamburgerMenu();
+        boolean shouldBeTrue= episodeGuidePage.closeHamburgerMenu();
+        Assert.assertTrue(shouldBeTrue);
     }
 
     @Test
@@ -72,8 +79,8 @@ public class EpisodeGuideTest extends BaseTest {
     }
 
     @Test
-    public void streamThisEpisodeStartYourFreeTrialPopupDiaslayed() {
-        episodeGuidePage.openEpisodeGuidePage();//.acceptAllCookies();
+    public void streamThisEpisodeStartYourFreeTrialPopupIsDisplayed() {
+        episodeGuidePage.openEpisodeGuidePage();
         episodeGuidePage.clickOnStreamThisEpisode();
         boolean openPopupModule = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
         Assert.assertTrue(openPopupModule);
@@ -89,4 +96,16 @@ public class EpisodeGuideTest extends BaseTest {
         boolean shouldBeFalse = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
         Assert.assertFalse(shouldBeFalse);
     }
+
+    @Test
+    public void testLog() {
+        log.info("!!!!!!!!!!!test log");
+    }
+
+//    @Test
+//    public void acceptCookies() throws InterruptedException {
+//        episodeGuidePage.openEpisodeGuidePage();
+//      Assert.assertTrue(episodeGuidePage.acceptAllCookies());
+//
+//    }
 }

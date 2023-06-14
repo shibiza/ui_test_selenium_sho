@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +23,8 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(xpath = "//div[@class= 'global-nav__menu-toggle']")
     private WebElement hamburgerMenu;
 
-    @FindBy(xpath = "//*[normalize-space(@class) = 'global-nav__menu-icon'][@data-track and @data-label='menu open']")
-    private WebElement closeHamburgerMenu;
+    @FindBy(xpath = "//*[normalize-space(@class) = 'global-nav__menu-icon']")
+    private WebElement closeHamburgerMenuBtn;
 
     @FindBy(xpath = "//a[@data-label= 'Start Your Free Trial']")
     private WebElement startYourFreeTrialNav;
@@ -55,23 +56,40 @@ public class EpisodeGuidePage extends BasePage {
         super(webDriver);
     }
 
-
     public EpisodeGuidePage openEpisodeGuidePage() {
         log.info("load to Episode guide page" + episodeGuidePageLink);
         webDriver.get(episodeGuidePageLink);
+        sleep(3_000);
         return this;
     }
 
-    public EpisodeGuidePage clickOnHamburgerMenu() {
+    public EpisodeGuidePage clickOnHamburgerMenu()  {
+        sleep(3_000);
         waitForClickable(hamburgerMenu);
+
         builder.moveToElement(hamburgerMenu).click().perform();
         return this;
     }
 
     public EpisodeGuidePage clickCloseHamburgerMenu() {
-        waitForClickable(closeHamburgerMenu);
-        builder.moveToElement(closeHamburgerMenu).click().perform();
+        sleep(4_000);
+        waitForClickable(closeHamburgerMenuBtn);
+
+        builder.moveToElement(closeHamburgerMenuBtn).click().perform();
+        sleep(3_000);
         return this;
+    }
+
+    public boolean closeHamburgerMenu() {
+
+        String shouldBeMenuClose = closeHamburgerMenuBtn.getAttribute("data-label");
+        System.out.println(shouldBeMenuClose);
+
+        if (shouldBeMenuClose.contains("menu close")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<String> hamburgerMenuContainsItems() {
@@ -80,6 +98,7 @@ public class EpisodeGuidePage extends BasePage {
 
         List<String> menuTextList = actualItemsOnHamburgerMenu.stream()
                 .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
+        log.info("Elements from hamburger menu are: " + menuTextList);
 
         return menuTextList;
     }
@@ -96,21 +115,11 @@ public class EpisodeGuidePage extends BasePage {
         return elementsAreHyperlinks;
     }
 
-    public boolean closeHamburgerMenu() {
-        builder.moveToElement(closeHamburgerMenu).click().perform();
-        boolean shouldNotBeDisplayed = closeHamburgerMenu.isEnabled();
-
-        if (shouldNotBeDisplayed) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
         String colorOfStartYourFreeTrialBtn = startYourFreeTrialNav.getCssValue("background-color");
         log.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
+
         return colorOfStartYourFreeTrialBtn;
     }
 
@@ -132,10 +141,15 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage acceptAllCookies() {
-        waitForClickable(acceptCookiesBtn);
-        acceptCookiesBtn.click();
-        webDriver.navigate().refresh();
-        return new EpisodeGuidePage(webDriver);
+        sleep(3_000);
+        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//*[@id='onetrust-accept-btn-handler']")));
+        waitForClickable(el);
+        el.click();
+
+        return this;
     }
+
+
 
 }
