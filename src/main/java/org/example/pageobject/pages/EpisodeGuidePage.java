@@ -1,6 +1,7 @@
 package org.example.pageobject.pages;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.example.pageobject.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -52,6 +53,8 @@ public class EpisodeGuidePage extends BasePage {
 
     Actions builder = new Actions(webDriver);
 
+    static Logger logger = Logger.getLogger(EpisodeGuidePage.class);
+
     public EpisodeGuidePage(WebDriver webDriver) {
         super(webDriver);
     }
@@ -59,20 +62,19 @@ public class EpisodeGuidePage extends BasePage {
     public EpisodeGuidePage openEpisodeGuidePage() {
         log.info("load to Episode guide page" + episodeGuidePageLink);
         webDriver.get(episodeGuidePageLink);
-        sleep(3_000);
+        sleep(2_000);
         return this;
     }
 
-    public EpisodeGuidePage clickOnHamburgerMenu()  {
-        sleep(3_000);
+    public EpisodeGuidePage clickOnHamburgerMenu() {
+        sleep(2_000);
         waitForClickable(hamburgerMenu);
-
         builder.moveToElement(hamburgerMenu).click().perform();
         return this;
     }
 
     public EpisodeGuidePage clickCloseHamburgerMenu() {
-        sleep(4_000);
+        sleep(2_000);
         waitForClickable(closeHamburgerMenuBtn);
 
         builder.moveToElement(closeHamburgerMenuBtn).click().perform();
@@ -128,7 +130,7 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage clickOnStreamThisEpisode() {
-        waitToBePresent(streamThisEpisodeButton);
+        sleep(2_000);
         waitForClickable(streamThisEpisodeButton);
         builder.moveToElement(streamThisEpisodeButton).click().perform();
         return this;
@@ -149,7 +151,6 @@ public class EpisodeGuidePage extends BasePage {
 
         return this;
     }
-
 
 
 }

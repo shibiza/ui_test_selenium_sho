@@ -1,11 +1,13 @@
 package org.example.pageobject.pages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.pageobject.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+@Slf4j
 public class HomelandSeries extends BasePage {
 
     public HomelandSeries(WebDriver webDriver) {
@@ -19,6 +21,7 @@ public class HomelandSeries extends BasePage {
     private WebElement navigationLogo;
 
     public boolean openHomelandSeries() {
+        log.info("load to Episode guide page" + homelandSeriesSeason5Link);
         webDriver.get(homelandSeriesSeason5Link);
         wait.until(ExpectedConditions.visibilityOf(navigationLogo));
         return navigationLogo.isDisplayed();

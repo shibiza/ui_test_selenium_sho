@@ -5,9 +5,6 @@ import org.example.pageobject.pages.EpisodeGuidePage;
 import org.example.pageobject.pages.StartYourFreeTrialPopupModule;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class EpisodeGuideTest extends BaseTest {
         ArrayList<String> actualItemsHamburgerMenu = (ArrayList<String>) episodeGuidePage.hamburgerMenuContainsItems();
         System.out.println(actualItemsHamburgerMenu);
 
-        Assert.assertTrue(actualItemsHamburgerMenu.equals(expectedItemsOnHamburgerMenu));
+        Assert.assertEquals(actualItemsHamburgerMenu, expectedItemsOnHamburgerMenu);
     }
 
     @Test
@@ -49,7 +46,6 @@ public class EpisodeGuideTest extends BaseTest {
                 .itemsFromHamburgerMenuAreHyperlinks();
         System.out.println(actualElementsAreHyperLinks);
 
-        //    Assert.assertTrue(true);
         Assert.assertTrue(actualElementsAreHyperLinks.containsAll(expectedElementsAreHyperLinks));
     }
 
@@ -57,8 +53,9 @@ public class EpisodeGuideTest extends BaseTest {
     public void closeHamburgerMenu() {
         episodeGuidePage.openEpisodeGuidePage()
                 .acceptAllCookies()
-                .clickOnHamburgerMenu().clickCloseHamburgerMenu();
-        boolean shouldBeTrue= episodeGuidePage.closeHamburgerMenu();
+                .clickOnHamburgerMenu()
+                .clickCloseHamburgerMenu();
+        boolean shouldBeTrue = episodeGuidePage.closeHamburgerMenu();
         Assert.assertTrue(shouldBeTrue);
     }
 
@@ -80,17 +77,19 @@ public class EpisodeGuideTest extends BaseTest {
 
     @Test
     public void streamThisEpisodeStartYourFreeTrialPopupIsDisplayed() {
-        episodeGuidePage.openEpisodeGuidePage();
-        episodeGuidePage.clickOnStreamThisEpisode();
+        episodeGuidePage.openEpisodeGuidePage()
+                .acceptAllCookies()
+                .clickOnStreamThisEpisode();
         boolean openPopupModule = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
         Assert.assertTrue(openPopupModule);
     }
 
     @Test
     public void closePopupModule() {
-        episodeGuidePage.openEpisodeGuidePage();
-        episodeGuidePage.clickOnStreamThisEpisode();
-        episodeGuidePage.visibilityOfPopupModule();
+        episodeGuidePage.openEpisodeGuidePage()
+                .acceptAllCookies()
+                .clickOnStreamThisEpisode()
+                .visibilityOfPopupModule();
         startYourFreeTrialPopupModule.closeStartYourFreeTrialPopupModule();
 
         boolean shouldBeFalse = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
@@ -102,10 +101,4 @@ public class EpisodeGuideTest extends BaseTest {
         log.info("!!!!!!!!!!!test log");
     }
 
-//    @Test
-//    public void acceptCookies() throws InterruptedException {
-//        episodeGuidePage.openEpisodeGuidePage();
-//      Assert.assertTrue(episodeGuidePage.acceptAllCookies());
-//
-//    }
 }
