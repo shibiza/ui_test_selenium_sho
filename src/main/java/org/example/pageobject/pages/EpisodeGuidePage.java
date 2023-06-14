@@ -1,16 +1,17 @@
 package org.example.pageobject.pages;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.pageobject.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class EpisodeGuidePage extends BasePage {
     private static final String startPageLink = "https://www.sho.com";
     private static final String episodeGuidePageLink = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
@@ -21,8 +22,7 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(xpath = "//div[@class= 'global-nav__menu-toggle']")
     private WebElement hamburgerMenu;
 
-    //  @FindBy(xpath = "//div[@class='global-nav__menu-icon' and @data-label='menu close']")
-    @FindBy(css = ".global-nav--open .global-nav__inner .global-nav__menu-toggle span:nth-child(3)")
+    @FindBy(xpath = "//*[normalize-space(@class) = 'global-nav__menu-icon'][@data-track and @data-label='menu open']")
     private WebElement closeHamburgerMenu;
 
     @FindBy(xpath = "//a[@data-label= 'Start Your Free Trial']")
@@ -55,14 +55,22 @@ public class EpisodeGuidePage extends BasePage {
         super(webDriver);
     }
 
+
     public EpisodeGuidePage openEpisodeGuidePage() {
+        log.info("load to Episode guide page" + episodeGuidePageLink);
         webDriver.get(episodeGuidePageLink);
         return this;
     }
 
     public EpisodeGuidePage clickOnHamburgerMenu() {
-        wait.until(ExpectedConditions.visibilityOf(hamburgerMenu));
+        waitForClickable(hamburgerMenu);
         builder.moveToElement(hamburgerMenu).click().perform();
+        return this;
+    }
+
+    public EpisodeGuidePage clickCloseHamburgerMenu() {
+        waitForClickable(closeHamburgerMenu);
+        builder.moveToElement(closeHamburgerMenu).click().perform();
         return this;
     }
 
@@ -90,18 +98,20 @@ public class EpisodeGuidePage extends BasePage {
 
     public boolean closeHamburgerMenu() {
         builder.moveToElement(closeHamburgerMenu).click().perform();
-        boolean isClickable = closeHamburgerMenu.isEnabled();
+        boolean shouldNotBeDisplayed = closeHamburgerMenu.isEnabled();
 
-        if (isClickable) {
-            return false;
-        } else {
+        if (shouldNotBeDisplayed) {
             return true;
+        } else {
+            return false;
         }
     }
 
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
-        return startYourFreeTrialNav.getCssValue("background-color");
+        String colorOfStartYourFreeTrialBtn = startYourFreeTrialNav.getCssValue("background-color");
+        log.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
+        return colorOfStartYourFreeTrialBtn;
     }
 
     public boolean elementIsPresent(String xPath) {
@@ -109,19 +119,19 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage clickOnStreamThisEpisode() {
+        waitToBePresent(streamThisEpisodeButton);
         waitForClickable(streamThisEpisodeButton);
         builder.moveToElement(streamThisEpisodeButton).click().perform();
         return this;
     }
 
     public boolean visibilityOfPopupModule() {
-        wait.until(ExpectedConditions.visibilityOf(onPopupModuleButton));
+        waitForClickable(onPopupModuleButton);
         boolean isPopupDisplayed = onPopupModuleButton.isDisplayed();
         return isPopupDisplayed;
     }
 
     public EpisodeGuidePage acceptAllCookies() {
-        wait.until(ExpectedConditions.visibilityOf(acceptCookiesBtn));
         waitForClickable(acceptCookiesBtn);
         acceptCookiesBtn.click();
         webDriver.navigate().refresh();

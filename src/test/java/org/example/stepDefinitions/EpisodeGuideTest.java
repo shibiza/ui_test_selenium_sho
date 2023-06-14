@@ -50,7 +50,7 @@ public class EpisodeGuideTest extends BaseTest {
 
     @Test
     public void closeHamburgerMenu() {
-        episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu();
+        episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu().clickCloseHamburgerMenu();
         boolean shouldBeFalse = episodeGuidePage.closeHamburgerMenu();
         Assert.assertFalse(shouldBeFalse);
     }
@@ -59,7 +59,6 @@ public class EpisodeGuideTest extends BaseTest {
     public void VerifyStartYourFreeTrialMarkRed() {
         episodeGuidePage.openEpisodeGuidePage();
         String actualRed = episodeGuidePage.getColourOfStartYourFreeTrialNav();
-
         Assert.assertEquals(expectedColorRed, actualRed);
     }
 
@@ -68,10 +67,7 @@ public class EpisodeGuideTest extends BaseTest {
         episodeGuidePage.openEpisodeGuidePage();
         boolean actualStreamButton = episodeGuidePage.elementIsPresent(streamThisEpisodeButton);
         boolean actualWatchPreview = episodeGuidePage.elementIsPresent(watchPreviewButton);
-        boolean test = false;
-        if (actualWatchPreview == true && actualStreamButton == true) {
-            test = true;
-        }
+        boolean test = actualWatchPreview && actualStreamButton;
         Assert.assertTrue(test);
     }
 
