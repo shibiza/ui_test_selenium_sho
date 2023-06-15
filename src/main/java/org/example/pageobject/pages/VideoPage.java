@@ -88,18 +88,6 @@ public class VideoPage extends BasePage {
         return videoPlayer.getText().contains("vjs-playing");
     }
 
-//    public boolean videoPlayerAutoPlayAnotherVideo() {
-//        String anotherVideoLink = "https://www.sho.com/video/52780/next-on-episode-1";
-//        logger.info("load to Video page " + anotherVideoLink);
-//        webDriver.get(anotherVideoLink);
-//        sleep(1_000);
-//        waitForClickable(acceptAllCookiesBtn);
-//        acceptAllCookiesBtn.click();
-//        sleep(1_000);
-//        waitForClickable(videoPlayer);
-//        return videoPlayer.getText().contains("vjs-playing");
-//    }
-
     public boolean pressPlayVideo() {
         waitForClickable(playVideoBtn);
         logger.info("click on 'play' button");

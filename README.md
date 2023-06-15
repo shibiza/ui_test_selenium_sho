@@ -1,4 +1,4 @@
-Used tools: Java, Selenium WebDriver, Junit
+Stack: Java 17, Selenium WebDriver, Junit 4, Surefire reports, Maven, Log4j
 
 The task:
 Please find a scenario to automate below. Use Selenium 3+ or any Selenium wrapper + Java stack, add any logging and reporting libs.
