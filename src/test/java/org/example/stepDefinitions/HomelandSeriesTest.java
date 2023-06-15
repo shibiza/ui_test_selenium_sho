@@ -1,12 +1,12 @@
 package org.example.stepDefinitions;
 
-import org.example.pageobject.pages.HomelandSeries;
+import org.example.pageobject.pages.HomelandSeriesPage;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class HomelandSeriesTest extends BaseTest {
 
-   private final HomelandSeries homelandSeries = new HomelandSeries(webDriver);
+   private final HomelandSeriesPage homelandSeries = new HomelandSeriesPage(webDriver);
 
     //  1.
     @Test
