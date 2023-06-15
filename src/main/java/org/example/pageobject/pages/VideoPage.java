@@ -1,5 +1,6 @@
 package org.example.pageobject.pages;
 
+import org.apache.log4j.Logger;
 import org.example.pageobject.BasePage;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -10,10 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class VideoPage extends BasePage {
 
+    static Logger logger = Logger.getLogger(VideoPage.class);
 
-    public VideoPage(WebDriver webDriver) {
-        super(webDriver);
-    }
 
     private static final String startPageLink = "https://www.sho.com";
     private static final String videoPageLink = startPageLink + "/video/38764/next-on-episode-1";
@@ -68,7 +67,12 @@ public class VideoPage extends BasePage {
 
     Actions builder = new Actions(webDriver);
 
+    public VideoPage(WebDriver webDriver) {
+        super(webDriver);
+    }
+
     public VideoPage openVideoPage() {
+        logger.info("load to Video page " + videoPageLink);
         webDriver.get(videoPageLink);
         wait.until(ExpectedConditions.visibilityOf(videoPlayer));
         sleep(3_000);
@@ -86,7 +90,6 @@ public class VideoPage extends BasePage {
     }
 
     public boolean pressPlayVideo() {
-        sleep(1_000);
         waitForClickable(playVideoBtn);
         playVideoBtn.click();
         return pauseVideoBtn.isDisplayed();
@@ -132,10 +135,8 @@ public class VideoPage extends BasePage {
     }
 
     public boolean pressFullScreenButton() {
-        sleep(3_000);
         waitForClickable(fullScreenBtn);
         fullScreenBtn.click();
-        sleep(3_000);
         waitForVisibility(exitFullScreenBtn);
         return exitFullScreenBtn.isDisplayed();
     }
@@ -155,9 +156,11 @@ public class VideoPage extends BasePage {
         return fullScreenBtn.isDisplayed();
     }
 
-    public VideoPage acceptAllCookies() {
-        sleep(3_000);
+    public void acceptAllCookies() {
+        sleep(1_000);
         waitForClickable(acceptAllCookiesBtn);
-        return this;
+        logger.info("press on 'accept all cookies button' ");
+        acceptAllCookiesBtn.click();
+        sleep(1_000);
     }
 }

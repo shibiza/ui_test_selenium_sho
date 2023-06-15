@@ -15,7 +15,7 @@ public class VideoPlayerTest extends BaseTest {
 
     @Test
     public void videoAutoPlays() {
-        videoPage.openVideoPage();
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.videoPlayerAutoPlay());
     }
 
@@ -30,7 +30,7 @@ public class VideoPlayerTest extends BaseTest {
     //4.b.ii
     @Test
     public void pressMuteAndUnmuteVideo() {
-        videoPage.openVideoPage();
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.pressMuteVideo());
         Assert.assertTrue(videoPage.pressUnmuteVideo());
     }
@@ -38,7 +38,7 @@ public class VideoPlayerTest extends BaseTest {
     //4.b.iii
     @Test
     public void expandVolumeSlider() {
-        videoPage.openVideoPage();
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.hoverOverMuteVideo());
     }
 
@@ -51,23 +51,29 @@ public class VideoPlayerTest extends BaseTest {
 
     //4.b.v
     @Test
-    public void timeLineControl() {
-        videoPage.openVideoPage();
+    public void timeLineScrubbingControl() {
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.putSliderToTheEndOfBar());
     }
 
-    //4.b.vi && 4.2
+    //4.b.vi
     @Test
-    public void pressFullScreenAndExitFullScreenButtons() {
-        videoPage.openVideoPage();
+    public void pressFullScreenButton() {
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.pressFullScreenButton());
+    }
+
+    //4.2
+    @Test
+    public void pressExitFullScreenButton() {
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.pressExitFullScreenButton());
     }
 
     //4.b.vii
     @Test
     public void checkControlsInFullScreenMode() {
-        videoPage.openVideoPage();
+        videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.pressFullScreenButton());
         Assert.assertTrue(videoPage.pressPlayVideo());
         Assert.assertTrue(videoPage.pressPauseVideo());

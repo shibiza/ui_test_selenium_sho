@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,11 +43,8 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(xpath = "//a[@class= 'streaming-modal__button']")
     private WebElement onPopupModuleBtn;
 
-    @FindBy(id = "ot-sdk-btn")
-    private WebElement manageCookiesBtn;
-
     @FindBy(id = "onetrust-accept-btn-handler")
-    private WebElement acceptCookiesBtn;
+    private WebElement acceptAllCookiesBtn;
 
     Actions builder = new Actions(webDriver);
 
@@ -59,9 +55,8 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage openEpisodeGuidePage() {
-        //log.info("load to Episode guide page" + episodeGuidePageLink);
+        logger.info("load to Episode guide page " + episodeGuidePageLink);
         webDriver.get(episodeGuidePageLink);
-        //  sleep(2_000);
         return this;
     }
 
@@ -80,7 +75,7 @@ public class EpisodeGuidePage extends BasePage {
 
     public boolean closeHamburgerMenu() {
         String shouldBeMenuClose = closeHamburgerMenuBtn.getAttribute("data-label");
-        // System.out.println(shouldBeMenuClose);
+        logger.info(" 'menu close' means we're out of hamburger menu "  + shouldBeMenuClose);
 
         if (shouldBeMenuClose.contains("menu close")) {
             return true;
@@ -95,7 +90,7 @@ public class EpisodeGuidePage extends BasePage {
 
         List<String> menuTextList = actualItemsOnHamburgerMenu.stream()
                 .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
-        //log.info("Elements from hamburger menu are: " + menuTextList);
+        logger.info("Elements from hamburger menu are: " + menuTextList);
 
         return menuTextList;
     }
@@ -115,7 +110,7 @@ public class EpisodeGuidePage extends BasePage {
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
         String colorOfStartYourFreeTrialBtn = startYourFreeTrialNav.getCssValue("background-color");
-        //log.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
+        logger.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
 
         return colorOfStartYourFreeTrialBtn;
     }
@@ -131,7 +126,6 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public boolean visibilityOfPopupModule() {
-      //  sleep(1_000);
         waitForClickable(onPopupModuleBtn);
         boolean isPopupDisplayed = onPopupModuleBtn.isDisplayed();
         return isPopupDisplayed;
@@ -139,11 +133,10 @@ public class EpisodeGuidePage extends BasePage {
 
     public EpisodeGuidePage acceptAllCookies() {
         sleep(1_000);
-        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[@id='onetrust-accept-btn-handler']")));
-        waitForClickable(el);
-        el.click();
+        waitForClickable(acceptAllCookiesBtn);
+        logger.info("press on 'accept all cookies button' ");
+        acceptAllCookiesBtn.click();
         sleep(1_000);
-        return this;
+    return this;
     }
 }

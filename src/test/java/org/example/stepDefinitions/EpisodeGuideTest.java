@@ -34,7 +34,6 @@ public class EpisodeGuideTest extends BaseTest {
         episodeGuidePage.openEpisodeGuidePage()
                 .clickOnHamburgerMenu();
         ArrayList<String> actualItemsHamburgerMenu = (ArrayList<String>) episodeGuidePage.hamburgerMenuContainsItems();
-        System.out.println(actualItemsHamburgerMenu);
 
         Assert.assertEquals(actualItemsHamburgerMenu, expectedItemsOnHamburgerMenu);
     }
@@ -45,7 +44,6 @@ public class EpisodeGuideTest extends BaseTest {
                 .clickOnHamburgerMenu();
         ArrayList<String> actualElementsAreHyperLinks = (ArrayList<String>) episodeGuidePage
                 .itemsFromHamburgerMenuAreHyperlinks();
-        System.out.println(actualElementsAreHyperLinks);
 
         Assert.assertTrue(actualElementsAreHyperLinks.containsAll(expectedElementsAreHyperLinks));
     }
@@ -56,14 +54,15 @@ public class EpisodeGuideTest extends BaseTest {
                 .acceptAllCookies()
                 .clickOnHamburgerMenu()
                 .clickCloseHamburgerMenu();
-        boolean shouldBeTrue = episodeGuidePage.closeHamburgerMenu();
-        Assert.assertTrue(shouldBeTrue);
+
+        Assert.assertTrue(episodeGuidePage.closeHamburgerMenu());
     }
 
     @Test
     public void VerifyStartYourFreeTrialMarkRed() {
         episodeGuidePage.openEpisodeGuidePage();
         String actualRed = episodeGuidePage.getColourOfStartYourFreeTrialNav();
+
         Assert.assertEquals(expectedColorRed, actualRed);
     }
 
@@ -73,6 +72,7 @@ public class EpisodeGuideTest extends BaseTest {
         boolean actualStreamButton = episodeGuidePage.elementIsPresent(streamThisEpisodeButton);
         boolean actualWatchPreview = episodeGuidePage.elementIsPresent(watchPreviewButton);
         boolean test = actualWatchPreview && actualStreamButton;
+
         Assert.assertTrue(test);
     }
 
@@ -81,8 +81,8 @@ public class EpisodeGuideTest extends BaseTest {
         episodeGuidePage.openEpisodeGuidePage()
                 .acceptAllCookies()
                 .clickOnStreamThisEpisode();
-        boolean openPopupModule = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
-        Assert.assertTrue(openPopupModule);
+
+        Assert.assertTrue(startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed());
     }
 
     @Test
@@ -95,10 +95,4 @@ public class EpisodeGuideTest extends BaseTest {
 
         Assert.assertTrue(startYourFreeTrialPopupModule.waitToPopupDisappear());
     }
-
-    @Test
-    public void testLog() {
-        logger.info("!!!!!!!!!!!test log");
-    }
-
 }

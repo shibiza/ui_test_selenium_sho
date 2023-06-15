@@ -29,8 +29,10 @@ public class StartYourFreeTrialPopupModule extends BasePage {
         return waitForElementNotDisplayed(popupWindowOpens);
     }
 
-    public void closeStartYourFreeTrialPopupModule() {
+    public boolean closeStartYourFreeTrialPopupModule() {
         waitForClickable(closeStartFreeTrialPopupModuleBtn).click();
         closeStartFreeTrialPopupModuleBtn.click();
+        sleep(2_000);
+        return waitForElementNotDisplayed(closeStartFreeTrialPopupModuleBtn);
     }
 }
