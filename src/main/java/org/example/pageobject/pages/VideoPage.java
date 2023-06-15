@@ -85,36 +85,41 @@ public class VideoPage extends BasePage {
 
     public boolean videoPlayerAutoPlay() {
         waitForClickable(videoPlayer);
-        System.out.println(videoPlayer.getText());
+        logger.info("video player AutoPlays");
         return videoPlayer.getText().contains("vjs-playing");
     }
 
     public boolean pressPlayVideo() {
         waitForClickable(playVideoBtn);
+        logger.info("click on 'play' button");
         playVideoBtn.click();
         return pauseVideoBtn.isDisplayed();
     }
 
     public boolean pressPauseVideo() {
         waitForClickable(pauseVideoBtn);
+        logger.info("click on 'pause' button");
         pauseVideoBtn.click();
         return playVideoBtn.isDisplayed();
     }
 
     public boolean pressMuteVideo() {
         waitForClickable(muteVideoBtn);
+        logger.info("click on 'mute' button");
         muteVideoBtn.click();
         return unmuteVideoBtn.isDisplayed();
     }
 
     public boolean pressUnmuteVideo() {
         waitForClickable(unmuteVideoBtn);
+        logger.info("click on 'unmute' button");
         unmuteVideoBtn.click();
         return muteVideoBtn.isDisplayed();
     }
 
     public boolean hoverOverMuteVideo() {
         waitForClickable(muteVideoBtn);
+        logger.info("hover over 'mute' button");
         builder.moveToElement(muteVideoBtn).build().perform();
         return volumeBar.isDisplayed();
     }
