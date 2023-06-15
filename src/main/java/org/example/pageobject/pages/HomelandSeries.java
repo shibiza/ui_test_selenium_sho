@@ -9,8 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomelandSeries extends BasePage {
 
-    private static final String startPageLink = "https://www.sho.com";
-    private static final String homelandSeriesSeason5Link = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
+    private static final String HOMELAND_SERIES_SEASON_5_LINK = START_PAGE_LINK + "/homeland/season/5/episode/1/separation-anxiety";
 
     @FindBy(xpath = "//a[@class=\"global-nav__logo\"]")
     private WebElement navigationLogo;
@@ -22,8 +21,9 @@ public class HomelandSeries extends BasePage {
     }
 
     public boolean openHomelandSeries() {
-        logger.info("load to 'Homeland' series season 5 page" + homelandSeriesSeason5Link);
-        webDriver.get(homelandSeriesSeason5Link);
+        logger.info("load to 'Homeland' series season 5 page" + HOMELAND_SERIES_SEASON_5_LINK);
+        webDriver.get(HOMELAND_SERIES_SEASON_5_LINK);
+        acceptAllCookies();
         wait.until(ExpectedConditions.visibilityOf(navigationLogo));
         return navigationLogo.isDisplayed();
     }

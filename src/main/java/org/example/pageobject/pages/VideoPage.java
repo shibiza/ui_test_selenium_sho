@@ -2,6 +2,7 @@ package org.example.pageobject.pages;
 
 import org.apache.log4j.Logger;
 import org.example.pageobject.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,11 +12,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class VideoPage extends BasePage {
 
-    static Logger logger = Logger.getLogger(VideoPage.class);
-
-
-    private static final String startPageLink = "https://www.sho.com";
-    private static final String videoPageLink = startPageLink + "/video/38764/next-on-episode-1";
+    private static final Logger LOGGER = Logger.getLogger(VideoPage.class);
+    private static final String START_PAGE_LINK = "https://www.sho.com";
+    private static final String VIDEO_PAGE_LINK = START_PAGE_LINK + "/video/38764/next-on-episode-1";
 
     @FindBy(xpath = "//div[contains(@class, 'video-playr__video__embed')]")
     private WebElement videoPlayer;
@@ -31,9 +30,6 @@ public class VideoPage extends BasePage {
 
     @FindBy(xpath = "//button[@title = 'Unmute']")
     private WebElement unmuteVideoBtn;
-
-    @FindBy(xpath = "//div[@class='vjs-volume-panel vjs-control vjs-volume-panel-horizontal vjs-hover']")
-    private WebElement volumeBar;
 
     @FindBy(xpath = "//div[@class='vjs-current-time vjs-time-control vjs-control']")
     private WebElement timeControlCurrent;
@@ -65,61 +61,71 @@ public class VideoPage extends BasePage {
     @FindBy(id = "onetrust-accept-btn-handler")
     private WebElement acceptAllCookiesBtn;
 
-    Actions builder = new Actions(webDriver);
+    private final Actions builder = new Actions(webDriver);
 
     public VideoPage(WebDriver webDriver) {
         super(webDriver);
     }
 
     public VideoPage openVideoPage() {
-        logger.info("load to Video page " + videoPageLink);
-        webDriver.get(videoPageLink);
+        LOGGER.info("load to Video page " + VIDEO_PAGE_LINK);
+        webDriver.get(VIDEO_PAGE_LINK);
+        acceptAllCookies();
         wait.until(ExpectedConditions.visibilityOf(videoPlayer));
         return this;
     }
 
-    public boolean openVideoPageAndVideoPreview() {
+    public boolean isVideoPageDisplayed() {
+        waitForVisibility(videoPlayer);
         return videoPlayer.isDisplayed();
     }
+    public VideoPage navigateToVideoPageFromWatchPreview() {
+        EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
+        return episodeGuidePage.openEpisodeGuidePage().clickOnWatchPreview();
+    }
 
-    public boolean videoPlayerAutoPlay() {
-        waitForClickable(videoPlayer);
-        logger.info("video player AutoPlays");
-        return videoPlayer.getText().contains("vjs-playing");
+    public boolean isVideoPlayerAutoPlay() {
+        waitForClickable(pauseVideoBtn);
+        LOGGER.info("video player AutoPlays");
+        return pauseVideoBtn.isDisplayed();
     }
 
     public boolean pressPlayVideo() {
         waitForClickable(playVideoBtn);
-        logger.info("click on 'play' button");
+        LOGGER.info("click on 'play' button");
         playVideoBtn.click();
         return pauseVideoBtn.isDisplayed();
     }
 
     public boolean pressPauseVideo() {
         waitForClickable(pauseVideoBtn);
-        logger.info("click on 'pause' button");
+        LOGGER.info("click on 'pause' button");
         pauseVideoBtn.click();
         return playVideoBtn.isDisplayed();
     }
 
     public boolean pressMuteVideo() {
         waitForClickable(muteVideoBtn);
-        logger.info("click on 'mute' button");
+        LOGGER.info("click on 'mute' button");
         muteVideoBtn.click();
         return unmuteVideoBtn.isDisplayed();
     }
 
     public boolean pressUnmuteVideo() {
         waitForClickable(unmuteVideoBtn);
-        logger.info("click on 'unmute' button");
+        LOGGER.info("click on 'unmute' button");
         unmuteVideoBtn.click();
         return muteVideoBtn.isDisplayed();
     }
 
+
     public boolean hoverOverMuteVideo() {
         waitForClickable(muteVideoBtn);
-        logger.info("hover over 'mute' button");
-        builder.moveToElement(muteVideoBtn).build().perform();
+        LOGGER.info("hover over 'mute' button");
+        builder.clickAndHold(muteVideoBtn).build().perform();
+        By volumeBarXpath = By.xpath("//div[@class='vjs-volume-panel vjs-control vjs-volume-panel-horizontal vjs-hover']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(volumeBarXpath));
+        WebElement volumeBar = webDriver.findElement(volumeBarXpath);
         return volumeBar.isDisplayed();
     }
 
@@ -141,7 +147,7 @@ public class VideoPage extends BasePage {
     public boolean pressFullScreenButton() {
         waitForClickable(fullScreenBtn);
         fullScreenBtn.click();
-        waitForVisibility(exitFullScreenBtn);
+        waitForClickable(exitFullScreenBtn);
         return exitFullScreenBtn.isDisplayed();
     }
 
@@ -158,13 +164,5 @@ public class VideoPage extends BasePage {
         player.sendKeys(Keys.ESCAPE);
         waitForVisibility(fullScreenBtn);
         return fullScreenBtn.isDisplayed();
-    }
-
-   public void acceptAllCookies() {
-        sleep(1_000);
-        waitForClickable(acceptAllCookiesBtn);
-        logger.info("press on 'accept all cookies button' ");
-        acceptAllCookiesBtn.click();
-        sleep(1_000);
     }
 }

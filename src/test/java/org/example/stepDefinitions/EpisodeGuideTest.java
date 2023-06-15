@@ -1,6 +1,5 @@
 package org.example.stepDefinitions;
 
-import org.apache.log4j.Logger;
 import org.example.pageobject.pages.EpisodeGuidePage;
 import org.example.pageobject.pages.StartYourFreeTrialPopupModule;
 import org.junit.Assert;
@@ -11,25 +10,22 @@ import java.util.List;
 
 public class EpisodeGuideTest extends BaseTest {
 
-    static Logger logger = Logger.getLogger(EpisodeGuideTest.class);
+    private final EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
+    private final StartYourFreeTrialPopupModule startYourFreeTrialPopupModule = new StartYourFreeTrialPopupModule(webDriver);
 
-    EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
-    StartYourFreeTrialPopupModule startYourFreeTrialPopupModule = new StartYourFreeTrialPopupModule(webDriver);
+    private static final String EXPECTED_COLOR_RED = "rgba(255, 32, 44, 1)";
+    private static final String STREAM_THIS_EPISODE_BUTTON = "//a[@class=\"button--primary cta--item\"]";
+    private static final String WATCH_PREVIEW_BUTTON = "//a[@class=\"button--secondary cta--item button--video\"]";
 
-    String expectedColorRed = "rgba(255, 32, 44, 1)";
-    String streamThisEpisodeButton = "//a[@class=\"button--primary cta--item\"]";
-    String watchPreviewButton = "//a[@class=\"button--secondary cta--item button--video\"]";
-
-    ArrayList<String> expectedItemsOnHamburgerMenu = new ArrayList<>(List.
+    private final ArrayList<String> expectedItemsOnHamburgerMenu = new ArrayList<>(List.
             of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
-    ArrayList<String> expectedElementsAreHyperLinks = new ArrayList<>(List.
+    private final ArrayList<String> expectedElementsAreHyperLinks = new ArrayList<>(List.
             of("Movies", "Sports", "Documentaries", "Free Full Episodes"));
 
     //  2.1
     @Test
     public void hamburgerMenuHasItems() {
-        episodeGuidePage.openEpisodeGuidePage()
-                .clickOnHamburgerMenu();
+        episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu();
         ArrayList<String> actualItemsHamburgerMenu = (ArrayList<String>) episodeGuidePage.hamburgerMenuContainsItems();
         Assert.assertEquals(actualItemsHamburgerMenu, expectedItemsOnHamburgerMenu);
     }
@@ -37,8 +33,7 @@ public class EpisodeGuideTest extends BaseTest {
     //  2.1.i
     @Test
     public void itemsFromHamburgerMenuAreHyperlinksExceptSeries() {
-        episodeGuidePage.openEpisodeGuidePage()
-                .clickOnHamburgerMenu();
+        episodeGuidePage.openEpisodeGuidePage().clickOnHamburgerMenu();
         ArrayList<String> actualElementsAreHyperLinks = (ArrayList<String>) episodeGuidePage
                 .itemsFromHamburgerMenuAreHyperlinks();
         Assert.assertTrue(actualElementsAreHyperLinks.containsAll(expectedElementsAreHyperLinks));
@@ -48,33 +43,31 @@ public class EpisodeGuideTest extends BaseTest {
     @Test
     public void closeHamburgerMenu() {
         episodeGuidePage.openEpisodeGuidePage()
-                .acceptAllCookies()
                 .clickOnHamburgerMenu()
                 .clickCloseHamburgerMenu();
-        Assert.assertTrue(episodeGuidePage.closeHamburgerMenu());
+        Assert.assertTrue(episodeGuidePage.isHamburgerMenuClosed());
     }
 
     //  2.2
     @Test
-    public void VerifyStartYourFreeTrialMarkRed() {
+    public void verifyStartYourFreeTrialMarkRed() {
         episodeGuidePage.openEpisodeGuidePage();
         String actualRed = episodeGuidePage.getColourOfStartYourFreeTrialNav();
-        Assert.assertEquals(expectedColorRed, actualRed);
+        Assert.assertEquals(EXPECTED_COLOR_RED, actualRed);
     }
 
     //  2.3
     @Test
     public void streamThisEpisodeAndWatchPreviewButtons() {
         episodeGuidePage.openEpisodeGuidePage();
-        Assert.assertTrue(episodeGuidePage.elementIsPresent(streamThisEpisodeButton));
-        Assert.assertTrue(episodeGuidePage.elementIsPresent(watchPreviewButton));
+        Assert.assertTrue(episodeGuidePage.elementIsPresent(STREAM_THIS_EPISODE_BUTTON));
+        Assert.assertTrue(episodeGuidePage.elementIsPresent(WATCH_PREVIEW_BUTTON));
     }
 
     //  2.3.ii
     @Test
     public void streamThisEpisodeStartYourFreeTrialPopupIsDisplayed() {
         episodeGuidePage.openEpisodeGuidePage()
-                .acceptAllCookies()
                 .clickOnStreamThisEpisode();
         Assert.assertTrue(startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed());
     }
@@ -83,7 +76,6 @@ public class EpisodeGuideTest extends BaseTest {
     @Test
     public void closePopupModule() {
         episodeGuidePage.openEpisodeGuidePage()
-                .acceptAllCookies()
                 .clickOnStreamThisEpisode()
                 .visibilityOfPopupModule();
         startYourFreeTrialPopupModule.closeStartYourFreeTrialPopupModule();

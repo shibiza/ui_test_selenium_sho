@@ -6,25 +6,25 @@ import org.junit.Test;
 
 public class VideoPlayerTest extends BaseTest {
 
-    VideoPage videoPage = new VideoPage(webDriver);
+   private final VideoPage videoPage = new VideoPage(webDriver);
 
     //  3.
     @Test
-    public void openVideoPageAndVideoPreview() {
-        Assert.assertTrue(videoPage.openVideoPage().openVideoPageAndVideoPreview());
+    public void openVideoPageFromVideoPreview() {
+        Assert.assertTrue(videoPage.navigateToVideoPageFromWatchPreview().isVideoPageDisplayed());
     }
 
     //  4.a
     @Test
     public void videoAutoPlays() {
-        videoPage.openVideoPage().acceptAllCookies();
-        Assert.assertTrue(videoPage.videoPlayerAutoPlay());
+        videoPage.navigateToVideoPageFromWatchPreview();
+        Assert.assertTrue(videoPage.isVideoPlayerAutoPlay());
     }
 
     //  4.b.i
     @Test
     public void pressPlayAndPauseVideo() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.pressPlayVideo());
         Assert.assertTrue(videoPage.pressPauseVideo());
     }
@@ -32,7 +32,7 @@ public class VideoPlayerTest extends BaseTest {
     //  4.b.ii
     @Test
     public void pressMuteAndUnmuteVideo() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.pressMuteVideo());
         Assert.assertTrue(videoPage.pressUnmuteVideo());
     }
@@ -40,7 +40,7 @@ public class VideoPlayerTest extends BaseTest {
     //  4.b.iii
     @Test
     public void expandVolumeSlider() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.hoverOverMuteVideo());
     }
 
@@ -54,14 +54,14 @@ public class VideoPlayerTest extends BaseTest {
     //  4.b.v
     @Test
     public void timeLineScrubbingControl() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.putSliderToTheEndOfBar());
     }
 
     //  4.b.vi && 4.2
     @Test
     public void pressFullScreenAndExitFullScreenButtons() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.pressFullScreenButton());
         Assert.assertTrue(videoPage.pressExitFullScreenButton());
     }
@@ -69,7 +69,7 @@ public class VideoPlayerTest extends BaseTest {
     //  4.b.vii
     @Test
     public void checkControlsInFullScreenMode() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.pressFullScreenButton());
         Assert.assertTrue(videoPage.pressPlayVideo());
         Assert.assertTrue(videoPage.pressPauseVideo());
@@ -83,8 +83,9 @@ public class VideoPlayerTest extends BaseTest {
     //  4.3
     @Test
     // NOTE: below test do not work due to chromedriver issue https://bugs.chromium.org/p/chromedriver/issues/detail?id=3466&q=ESC&can=1
+    // https://github.com/SeleniumHQ/selenium/issues/8292
     public void pressFullScreenAndEscapeButtons() {
-        videoPage.openVideoPage().acceptAllCookies();
+        videoPage.openVideoPage();
         Assert.assertTrue(videoPage.pressFullScreenButton());
         Assert.assertTrue(videoPage.pressEscapeToExitFullScreen());
     }

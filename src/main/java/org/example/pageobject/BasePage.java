@@ -1,8 +1,10 @@
 package org.example.pageobject;
 
+import org.apache.log4j.Logger;
 import org.example.Util;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,9 +12,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePage {
+    protected static final String START_PAGE_LINK = "https://www.sho.com";
+    private static final Logger LOGGER = Logger.getLogger(BasePage.class);
 
     protected WebDriver webDriver;
     protected WebDriverWait wait;
+
+    @FindBy(id = "onetrust-accept-btn-handler")
+    private WebElement acceptAllCookiesBtn;
 
     protected BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -41,5 +48,12 @@ public class BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+    protected void acceptAllCookies() {
+        sleep(1_000);
+        waitForClickable(acceptAllCookiesBtn);
+        LOGGER.info("press on 'accept all cookies button' ");
+        acceptAllCookiesBtn.click();
+        sleep(1_000);
     }
 }

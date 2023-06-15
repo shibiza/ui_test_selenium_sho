@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EpisodeGuidePage extends BasePage {
-    private static final String startPageLink = "https://www.sho.com";
-    private static final String episodeGuidePageLink = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
+    private static final Logger LOGGER = Logger.getLogger(EpisodeGuidePage.class);
+    private static final String EPISODE_GUIDE_PAGE_LINK = START_PAGE_LINK + "/homeland/season/5/episode/1/separation-anxiety";
 
     @FindBy(xpath = "//a[@class= 'global-nav__link' and @data-location= 'primary']")
     private WebElement elementsInsideHamburgerMenu;
 
-    @FindBy(xpath = "//div[@class= 'global-nav__menu-toggle']")
-    private WebElement hamburgerMenu;
+    @FindBy(xpath = "//div[@class='global-nav__menu-icon']") //!!!!!!!
+    private WebElement hamburgerMenuButton;
 
-    @FindBy(xpath = "//*[normalize-space(@class) = 'global-nav__menu-icon']")
-    private WebElement closeHamburgerMenuBtn;
+    @FindBy(xpath = "//body[@class='episode-detail has-menu-open']")/////!!!!!!!!!!!
+    private WebElement openedHamburgerMenu;
 
     @FindBy(xpath = "//a[@data-label= 'Start Your Free Trial']")
     private WebElement startYourFreeTrialNav;
@@ -46,42 +46,39 @@ public class EpisodeGuidePage extends BasePage {
     @FindBy(id = "onetrust-accept-btn-handler")
     private WebElement acceptAllCookiesBtn;
 
-    Actions builder = new Actions(webDriver);
+    private final Actions builder = new Actions(webDriver);
 
-    static Logger logger = Logger.getLogger(EpisodeGuidePage.class);
 
     public EpisodeGuidePage(WebDriver webDriver) {
         super(webDriver);
     }
 
     public EpisodeGuidePage openEpisodeGuidePage() {
-        logger.info("load to Episode guide page " + episodeGuidePageLink);
-        webDriver.get(episodeGuidePageLink);
+        LOGGER.info("load to Episode guide page " + EPISODE_GUIDE_PAGE_LINK);
+        webDriver.get(EPISODE_GUIDE_PAGE_LINK);
+        acceptAllCookies();
         return this;
     }
 
     public EpisodeGuidePage clickOnHamburgerMenu() {
-        waitForClickable(hamburgerMenu);
-        builder.moveToElement(hamburgerMenu).click().perform();
+        waitForClickable(hamburgerMenuButton);
+        builder.moveToElement(hamburgerMenuButton).click().perform();
+        WebElement openedMenu = webDriver.findElement(By.xpath("//body[@class='episode-detail has-menu-open']"));
+        waitForVisibility(openedMenu);
         return this;
     }
 
     public EpisodeGuidePage clickCloseHamburgerMenu() {
-        waitForClickable(closeHamburgerMenuBtn);
-        builder.moveToElement(closeHamburgerMenuBtn).click().perform();
-        sleep(3_000);
+        waitForClickable(hamburgerMenuButton);
+        builder.moveToElement(hamburgerMenuButton).click().perform();
+        WebElement closedMenu = webDriver.findElement(By.xpath("//body[@class='episode-detail']"));
+        waitForVisibility(closedMenu);
         return this;
     }
 
-    public boolean closeHamburgerMenu() {
-        String shouldBeMenuClose = closeHamburgerMenuBtn.getAttribute("data-label");
-        logger.info(" 'menu close' means we're out of hamburger menu "  + shouldBeMenuClose);
-
-        if (shouldBeMenuClose.contains("menu close")) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isHamburgerMenuClosed() {
+        WebElement closedMenu = webDriver.findElement(By.xpath("//body[@class='episode-detail']"));
+        return closedMenu.isDisplayed();
     }
 
     public List<String> hamburgerMenuContainsItems() {
@@ -90,7 +87,7 @@ public class EpisodeGuidePage extends BasePage {
 
         List<String> menuTextList = actualItemsOnHamburgerMenu.stream()
                 .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
-        logger.info("Elements from hamburger menu are: " + menuTextList);
+        LOGGER.info("Elements from hamburger menu are: " + menuTextList);
 
         return menuTextList;
     }
@@ -99,18 +96,16 @@ public class EpisodeGuidePage extends BasePage {
         List<WebElement> actualItemsOnHamburgerMenu = webDriver
                 .findElements(By.xpath("//a[@class='global-nav__link' and @data-location= 'primary']"));
 
-        List<String> elementsAreHyperlinks = actualItemsOnHamburgerMenu.stream()
+        return actualItemsOnHamburgerMenu.stream()
                 .filter(e -> e.getAttribute("href") != null && !e.getAttribute("href").isEmpty())
                 .map(e -> e.getAttribute("data-label"))
                 .collect(Collectors.toList());
-
-        return elementsAreHyperlinks;
     }
 
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
         String colorOfStartYourFreeTrialBtn = startYourFreeTrialNav.getCssValue("background-color");
-        logger.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
+        LOGGER.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
 
         return colorOfStartYourFreeTrialBtn;
     }
@@ -125,18 +120,14 @@ public class EpisodeGuidePage extends BasePage {
         return this;
     }
 
-    public boolean visibilityOfPopupModule() {
-        waitForClickable(onPopupModuleBtn);
-        boolean isPopupDisplayed = onPopupModuleBtn.isDisplayed();
-        return isPopupDisplayed;
+    public VideoPage clickOnWatchPreview() {
+        waitForClickable(watchPreviewBtn);
+        builder.moveToElement(watchPreviewBtn).click().perform();
+        return new VideoPage(webDriver);
     }
 
-    public EpisodeGuidePage acceptAllCookies() {
-        sleep(1_000);
-        waitForClickable(acceptAllCookiesBtn);
-        logger.info("press on 'accept all cookies button' ");
-        acceptAllCookiesBtn.click();
-        sleep(1_000);
-    return this;
+    public boolean visibilityOfPopupModule() {
+        waitForClickable(onPopupModuleBtn);
+        return onPopupModuleBtn.isDisplayed();
     }
 }

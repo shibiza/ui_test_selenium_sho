@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class HomelandSeriesTest extends BaseTest {
 
-    HomelandSeries homelandSeries = new HomelandSeries(webDriver);
+   private final HomelandSeries homelandSeries = new HomelandSeries(webDriver);
 
     //  1.
     @Test

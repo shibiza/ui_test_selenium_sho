@@ -30,6 +30,7 @@ public class StartYourFreeTrialPopupModule extends BasePage {
     }
 
     public boolean closeStartYourFreeTrialPopupModule() {
+        sleep(2_000);
         waitForClickable(closeStartFreeTrialPopupModuleBtn).click();
         closeStartFreeTrialPopupModuleBtn.click();
         sleep(2_000);
