@@ -92,13 +92,12 @@ public class EpisodeGuideTest extends BaseTest {
                 .visibilityOfPopupModule();
         startYourFreeTrialPopupModule.closeStartYourFreeTrialPopupModule();
 
-        boolean shouldBeFalse = startYourFreeTrialPopupModule.startYourFreeTrialPopupModuleDisplayed();
-        Assert.assertFalse(shouldBeFalse);
+        Assert.assertTrue(startYourFreeTrialPopupModule.waitToPopupDisappear());
     }
-
-    @Test
-    public void testLog() {
-        log.info("!!!!!!!!!!!test log");
-    }
+//
+//    @Test
+//    public void testLog() {
+//        log.info("!!!!!!!!!!!test log");
+//    }
 
 }

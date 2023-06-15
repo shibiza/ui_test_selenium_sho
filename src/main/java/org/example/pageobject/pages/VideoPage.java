@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 @Slf4j
 public class VideoPage extends BasePage {
 
@@ -50,26 +51,29 @@ public class VideoPage extends BasePage {
     private WebElement slider;
 
     @FindBy(xpath = "//div[@class='vjs-subs-caps-button vjs-menu-button vjs-menu-button-popup vjs-control vjs-button vjs-hidden']")
-    private WebElement ccButton;
+    private WebElement ccBtn;
 
     @FindBy(xpath = "//button[@class='vjs-play-control vjs-control vjs-button vjs-paused vjs-ended']")
-    private WebElement replayButton;
+    private WebElement replayBtn;
 
     @FindBy(xpath = "//button[@title='Fullscreen']")
-    private WebElement fullScreenButton;
+    private WebElement fullScreenBtn;
 
     @FindBy(xpath = "//button[@title='Exit Fullscreen']")
-    private WebElement exitFullScreenButton;
+    private WebElement exitFullScreenBtn;
 
     @FindBy(xpath = "//video")
     private WebElement player;
 
+    @FindBy(id = "onetrust-accept-btn-handler")
+    private WebElement acceptAllCookiesBtn;
 
     Actions builder = new Actions(webDriver);
 
     public VideoPage openVideoPage() {
         webDriver.get(videoPageLink);
         wait.until(ExpectedConditions.visibilityOf(videoPlayer));
+        sleep(3_000);
         return this;
     }
 
@@ -84,6 +88,7 @@ public class VideoPage extends BasePage {
     }
 
     public boolean pressPlayVideo() {
+        sleep(1_000);
         waitForClickable(playVideoBtn);
         playVideoBtn.click();
         return pauseVideoBtn.isDisplayed();
@@ -122,31 +127,39 @@ public class VideoPage extends BasePage {
 
     public boolean putSliderToTheEndOfBar() {
         waitForClickable(slider);
-        builder.dragAndDrop(slider, ccButton).build().perform();
+        builder.dragAndDrop(slider, ccBtn).build().perform();
         playVideoBtn.click();
-        waitForVisibility(replayButton);
-        return replayButton.isDisplayed();
+        waitForVisibility(replayBtn);
+        return replayBtn.isDisplayed();
     }
 
     public boolean pressFullScreenButton() {
-        waitForClickable(fullScreenButton);
-        fullScreenButton.click();
-        waitForVisibility(exitFullScreenButton);
-        return exitFullScreenButton.isDisplayed();
+        sleep(3_000);
+        waitForClickable(fullScreenBtn);
+        fullScreenBtn.click();
+        sleep(3_000);
+        waitForVisibility(exitFullScreenBtn);
+        return exitFullScreenBtn.isDisplayed();
     }
 
     public boolean pressExitFullScreenButton() {
-        waitForClickable(exitFullScreenButton);
-        exitFullScreenButton.click();
-        waitForVisibility(fullScreenButton);
-        return fullScreenButton.isDisplayed();
+        waitForClickable(exitFullScreenBtn);
+        exitFullScreenBtn.click();
+        waitForVisibility(fullScreenBtn);
+        return fullScreenBtn.isDisplayed();
     }
 
     public boolean pressEscapeToExitFullScreen() {
-        waitForVisibility(exitFullScreenButton);
+        waitForVisibility(exitFullScreenBtn);
         waitForVisibility(player);
         player.sendKeys(Keys.ESCAPE);
-        waitForVisibility(fullScreenButton);
-        return fullScreenButton.isDisplayed();
+        waitForVisibility(fullScreenBtn);
+        return fullScreenBtn.isDisplayed();
+    }
+
+    public VideoPage acceptAllCookies() {
+        sleep(3_000);
+        waitForClickable(acceptAllCookiesBtn);
+        return this;
     }
 }

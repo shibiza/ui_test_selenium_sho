@@ -1,7 +1,6 @@
 package org.example.pageobject;
 
 import org.example.Util;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -9,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class BasePage {
 
@@ -18,8 +16,6 @@ public class BasePage {
 
     protected BasePage(WebDriver webDriver) {
         this.webDriver = webDriver;
-        //this.webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
         this.wait = Util.waitTenSeconds(webDriver);
         PageFactory.initElements(webDriver, this);
     }
@@ -29,15 +25,16 @@ public class BasePage {
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
+    protected boolean waitForElementNotDisplayed(WebElement element) {
+        return new WebDriverWait(webDriver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.invisibilityOf(element));
+    }
+
     protected WebElement waitForClickable(WebElement element) {
         return new WebDriverWait(webDriver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    protected WebElement waitToBePresent(WebElement element) {
-        return new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.presenceOfElementLocated((By) element));
-    }
     protected void sleep(int millis) {
         try {
             Thread.sleep(millis);
@@ -45,5 +42,4 @@ public class BasePage {
             throw new RuntimeException(e);
         }
     }
-
 }

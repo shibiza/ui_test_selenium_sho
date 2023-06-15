@@ -31,10 +31,10 @@ public class EpisodeGuidePage extends BasePage {
     private WebElement startYourFreeTrialNav;
 
     @FindBy(xpath = "//a[@class=\"button--primary cta--item\"]")
-    private WebElement streamThisEpisodeButton;
+    private WebElement streamThisEpisodeBtn;
 
     @FindBy(xpath = "//a[@class=\"button--secondary cta--item button--video\"]")
-    private WebElement watchPreviewButton;
+    private WebElement watchPreviewBtn;
 
     @FindBy(xpath = "//h2[@class= 'streaming-modal__headline']")
     private WebElement startFreeTrialPopupHeadline;
@@ -43,7 +43,7 @@ public class EpisodeGuidePage extends BasePage {
     private WebElement closeStartFreeTrialPopupModule;
 
     @FindBy(xpath = "//a[@class= 'streaming-modal__button']")
-    private WebElement onPopupModuleButton;
+    private WebElement onPopupModuleBtn;
 
     @FindBy(id = "ot-sdk-btn")
     private WebElement manageCookiesBtn;
@@ -62,30 +62,26 @@ public class EpisodeGuidePage extends BasePage {
     public EpisodeGuidePage openEpisodeGuidePage() {
         log.info("load to Episode guide page" + episodeGuidePageLink);
         webDriver.get(episodeGuidePageLink);
-        sleep(2_000);
+        //  sleep(2_000);
         return this;
     }
 
     public EpisodeGuidePage clickOnHamburgerMenu() {
-        sleep(2_000);
         waitForClickable(hamburgerMenu);
         builder.moveToElement(hamburgerMenu).click().perform();
         return this;
     }
 
     public EpisodeGuidePage clickCloseHamburgerMenu() {
-        sleep(2_000);
         waitForClickable(closeHamburgerMenuBtn);
-
         builder.moveToElement(closeHamburgerMenuBtn).click().perform();
         sleep(3_000);
         return this;
     }
 
     public boolean closeHamburgerMenu() {
-
         String shouldBeMenuClose = closeHamburgerMenuBtn.getAttribute("data-label");
-        System.out.println(shouldBeMenuClose);
+        // System.out.println(shouldBeMenuClose);
 
         if (shouldBeMenuClose.contains("menu close")) {
             return true;
@@ -130,27 +126,25 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage clickOnStreamThisEpisode() {
-        sleep(2_000);
-        waitForClickable(streamThisEpisodeButton);
-        builder.moveToElement(streamThisEpisodeButton).click().perform();
+        waitForClickable(streamThisEpisodeBtn);
+        builder.moveToElement(streamThisEpisodeBtn).click().perform();
         return this;
     }
 
     public boolean visibilityOfPopupModule() {
-        waitForClickable(onPopupModuleButton);
-        boolean isPopupDisplayed = onPopupModuleButton.isDisplayed();
+      //  sleep(1_000);
+        waitForClickable(onPopupModuleBtn);
+        boolean isPopupDisplayed = onPopupModuleBtn.isDisplayed();
         return isPopupDisplayed;
     }
 
     public EpisodeGuidePage acceptAllCookies() {
-        sleep(3_000);
+        sleep(1_000);
         WebElement el = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//*[@id='onetrust-accept-btn-handler']")));
         waitForClickable(el);
         el.click();
-
+        sleep(1_000);
         return this;
     }
-
-
 }

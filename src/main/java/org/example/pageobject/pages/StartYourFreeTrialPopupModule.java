@@ -15,19 +15,22 @@ public class StartYourFreeTrialPopupModule extends BasePage {
     private WebElement startFreeTrialPopupHeadline;
 
     @FindBy(xpath = "//a[@class= 'modal__close']")
-    private WebElement closeStartFreeTrialPopupModule;
+    private WebElement closeStartFreeTrialPopupModuleBtn;
 
     @FindBy(xpath = "//div[@class= 'streaming-modal__image-container__shim']")
     private WebElement popupWindowOpens;
 
     public boolean startYourFreeTrialPopupModuleDisplayed() {
+        waitForVisibility(popupWindowOpens);
         return waitForVisibility(popupWindowOpens).isDisplayed();
     }
 
-    public EpisodeGuidePage closeStartYourFreeTrialPopupModule() {
-        waitForClickable(closeStartFreeTrialPopupModule).click();
-        return new EpisodeGuidePage(webDriver);
+    public boolean waitToPopupDisappear() {
+        return waitForElementNotDisplayed(popupWindowOpens);
     }
 
-
+    public void closeStartYourFreeTrialPopupModule() {
+        waitForClickable(closeStartFreeTrialPopupModuleBtn).click();
+        closeStartFreeTrialPopupModuleBtn.click();
+    }
 }
