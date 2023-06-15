@@ -14,12 +14,17 @@ public class VideoPlayerTest extends BaseTest {
         Assert.assertTrue(videoPage.openVideoPage().openVideoPageAndVideoPreview());
     }
 
-    //  4.
+    //  4.a
     @Test
     public void videoAutoPlays() {
         videoPage.openVideoPage().acceptAllCookies();
         Assert.assertTrue(videoPage.videoPlayerAutoPlay());
     }
+//    @Test
+//    public void anotherVideoAutoPlays() {
+//        videoPage.videoPlayerAutoPlayAnotherVideo();
+//        Assert.assertTrue(videoPage.videoPlayerAutoPlayAnotherVideo());
+//    }
 
     //  4.b.i
     @Test
