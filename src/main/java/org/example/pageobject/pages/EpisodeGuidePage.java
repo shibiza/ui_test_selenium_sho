@@ -1,6 +1,6 @@
 package org.example.pageobject.pages;
 
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.log4j.Logger;
 import org.example.pageobject.BasePage;
 import org.openqa.selenium.By;
@@ -13,7 +13,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class EpisodeGuidePage extends BasePage {
     private static final String startPageLink = "https://www.sho.com";
     private static final String episodeGuidePageLink = startPageLink + "/homeland/season/5/episode/1/separation-anxiety";
@@ -60,7 +59,7 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage openEpisodeGuidePage() {
-        log.info("load to Episode guide page" + episodeGuidePageLink);
+        //log.info("load to Episode guide page" + episodeGuidePageLink);
         webDriver.get(episodeGuidePageLink);
         //  sleep(2_000);
         return this;
@@ -96,7 +95,7 @@ public class EpisodeGuidePage extends BasePage {
 
         List<String> menuTextList = actualItemsOnHamburgerMenu.stream()
                 .map(e -> e.getAttribute("data-label")).collect(Collectors.toList());
-        log.info("Elements from hamburger menu are: " + menuTextList);
+        //log.info("Elements from hamburger menu are: " + menuTextList);
 
         return menuTextList;
     }
@@ -116,7 +115,7 @@ public class EpisodeGuidePage extends BasePage {
     public String getColourOfStartYourFreeTrialNav() {
         waitForVisibility(startYourFreeTrialNav);
         String colorOfStartYourFreeTrialBtn = startYourFreeTrialNav.getCssValue("background-color");
-        log.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
+        //log.info("color of 'Start Your Free Trial' button is " + colorOfStartYourFreeTrialBtn);
 
         return colorOfStartYourFreeTrialBtn;
     }

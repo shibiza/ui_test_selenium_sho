@@ -1,6 +1,5 @@
 package org.example.pageobject.pages;
 
-import lombok.extern.slf4j.Slf4j;
 import org.example.pageobject.BasePage;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +8,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-@Slf4j
 public class VideoPage extends BasePage {
 
 

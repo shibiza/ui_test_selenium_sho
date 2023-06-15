@@ -1,6 +1,6 @@
 package org.example.stepDefinitions;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.example.pageobject.pages.EpisodeGuidePage;
 import org.example.pageobject.pages.StartYourFreeTrialPopupModule;
 import org.junit.Assert;
@@ -9,8 +9,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class EpisodeGuideTest extends BaseTest {
+
+    static Logger logger = Logger.getLogger(EpisodeGuideTest.class);
 
     EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
     StartYourFreeTrialPopupModule startYourFreeTrialPopupModule = new StartYourFreeTrialPopupModule(webDriver);
@@ -94,10 +95,10 @@ public class EpisodeGuideTest extends BaseTest {
 
         Assert.assertTrue(startYourFreeTrialPopupModule.waitToPopupDisappear());
     }
-//
-//    @Test
-//    public void testLog() {
-//        log.info("!!!!!!!!!!!test log");
-//    }
+
+    @Test
+    public void testLog() {
+        logger.info("!!!!!!!!!!!test log");
+    }
 
 }
