@@ -14,6 +14,10 @@ public class EpisodeGuideTest extends BaseTest {
     private final StartYourFreeTrialPopupModule startYourFreeTrialPopupModule = new StartYourFreeTrialPopupModule(webDriver);
 
     private static final String EXPECTED_COLOR_RED = "rgba(255, 32, 44, 1)";
+    /*     The difference between #ff202c and rgba(255, 32, 44, 1) lies in the representation of color in CSS,
+           #ff202c and rgba(255, 32, 44, 1) actually represent the same color - a bright red.
+           The difference in representation arises due to the CSS color format, but they are equivalent
+            in terms of the actual color they represent.    */
     private static final String STREAM_THIS_EPISODE_BUTTON = "//a[@class=\"button--primary cta--item\"]";
     private static final String WATCH_PREVIEW_BUTTON = "//a[@class=\"button--secondary cta--item button--video\"]";
 

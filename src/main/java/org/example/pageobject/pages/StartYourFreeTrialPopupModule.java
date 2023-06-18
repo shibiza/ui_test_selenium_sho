@@ -11,9 +11,6 @@ public class StartYourFreeTrialPopupModule extends BasePage {
         super(webDriver);
     }
 
-    @FindBy(xpath = "//h2[@class= 'streaming-modal__headline']")
-    private WebElement startFreeTrialPopupHeadline;
-
     @FindBy(xpath = "//a[@class= 'modal__close']")
     private WebElement closeStartFreeTrialPopupModuleBtn;
 
@@ -30,8 +27,7 @@ public class StartYourFreeTrialPopupModule extends BasePage {
     }
 
     public boolean closeStartYourFreeTrialPopupModule() {
-        sleep(2_000);
-        waitForClickable(closeStartFreeTrialPopupModuleBtn).click();
+        waitForClickable(closeStartFreeTrialPopupModuleBtn);
         closeStartFreeTrialPopupModuleBtn.click();
         sleep(2_000);
         return waitForElementNotDisplayed(closeStartFreeTrialPopupModuleBtn);

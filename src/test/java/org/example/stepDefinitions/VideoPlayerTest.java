@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class VideoPlayerTest extends BaseTest {
 
-   private final VideoPage videoPage = new VideoPage(webDriver);
+    private final VideoPage videoPage = new VideoPage(webDriver);
 
     //  3.
     @Test
@@ -82,7 +82,10 @@ public class VideoPlayerTest extends BaseTest {
 
     //  4.3
     @Test
-     public void pressFullScreenAndEscapeButtons() {
+    // NOTE: below test do not work due to chromedriver issue
+    // https://bugs.chromium.org/p/chromedriver/issues/detail?id=3466&q=ESC&can=1
+    // https://github.com/SeleniumHQ/selenium/issues/8292
+    public void pressFullScreenAndEscapeButtons() {
         videoPage.openVideoPage();
         Assert.assertTrue(videoPage.pressFullScreenButton());
         Assert.assertTrue(videoPage.pressEscapeToExitFullScreen());

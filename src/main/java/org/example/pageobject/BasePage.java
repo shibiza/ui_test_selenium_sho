@@ -12,8 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BasePage {
+
     protected static final String START_PAGE_LINK = "https://www.sho.com";
-    private static final Logger LOGGER = Logger.getLogger(BasePage.class);
+    protected static final Logger LOGGER = Logger.getLogger(BasePage.class);
 
     protected WebDriver webDriver;
     protected WebDriverWait wait;
@@ -52,7 +53,7 @@ public class BasePage {
     protected void acceptAllCookies() {
         sleep(1_000);
         waitForClickable(acceptAllCookiesBtn);
-        LOGGER.info("press on 'accept all cookies button' ");
+        LOGGER.info("press on 'accept all cookies' button ");
         acceptAllCookiesBtn.click();
         sleep(1_000);
     }
