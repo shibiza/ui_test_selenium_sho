@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class BasePage {
+public abstract class BasePage {
 
     protected static final String START_PAGE_LINK = "https://www.sho.com";
     protected static final Logger LOGGER = Logger.getLogger(BasePage.class);

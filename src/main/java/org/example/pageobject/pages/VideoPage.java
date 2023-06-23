@@ -71,8 +71,10 @@ public class VideoPage extends BasePage {
 
     public boolean isVideoPageDisplayed() {
         waitForVisibility(videoPlayer);
+        LOGGER.info("video player on video page ");
         return videoPlayer.isDisplayed();
     }
+
     public VideoPage navigateToVideoPageFromWatchPreview() {
         EpisodeGuidePage episodeGuidePage = new EpisodeGuidePage(webDriver);
         return episodeGuidePage.openEpisodeGuidePage().clickOnWatchPreview();
@@ -131,6 +133,7 @@ public class VideoPage extends BasePage {
 
     public boolean putSliderToTheEndOfBar() {
         waitForClickable(slider);
+        LOGGER.info("put slider to the end of bar");
         builder.dragAndDrop(slider, ccBtn).build().perform();
         playVideoBtn.click();
         waitForVisibility(replayBtn);
@@ -139,6 +142,7 @@ public class VideoPage extends BasePage {
 
     public boolean pressFullScreenButton() {
         waitForClickable(fullScreenBtn);
+        LOGGER.info("press on 'full screen' button");
         fullScreenBtn.click();
         waitForClickable(exitFullScreenBtn);
         return exitFullScreenBtn.isDisplayed();
@@ -146,6 +150,7 @@ public class VideoPage extends BasePage {
 
     public boolean pressExitFullScreenButton() {
         waitForClickable(exitFullScreenBtn);
+        LOGGER.info("press on exit from 'full screen' button");
         exitFullScreenBtn.click();
         waitForVisibility(fullScreenBtn);
         return fullScreenBtn.isDisplayed();
@@ -154,6 +159,7 @@ public class VideoPage extends BasePage {
     public boolean pressEscapeToExitFullScreen() {
         waitForVisibility(exitFullScreenBtn);
         waitForVisibility(player);
+        LOGGER.info("now I will press 'ESC' button... And the test should fall((((");
         player.sendKeys(Keys.ESCAPE);
         waitForVisibility(fullScreenBtn);
         return fullScreenBtn.isDisplayed();

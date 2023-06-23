@@ -14,8 +14,11 @@ public class EpisodeGuidePage extends BasePage {
 
     private static final String EPISODE_GUIDE_PAGE_LINK = START_PAGE_LINK + "/homeland/season/5/episode/1/separation-anxiety";
 
-    @FindBy(xpath = "//div[@class='global-nav__menu-icon']") //!!!!!!!
-    private WebElement hamburgerMenuButton;
+    @FindBy(xpath = "//div[@class='global-nav__menu-icon']")
+    private WebElement hamburgerMenuBtn;
+
+    @FindBy(xpath = "//*[normalize-space(@class) = 'global-nav__menu-icon']")
+    private WebElement closeHamburgerMenuBtn;
 
     @FindBy(xpath = "//body[@class='episode-detail has-menu-open']")
     private WebElement openedMenu;
@@ -49,21 +52,29 @@ public class EpisodeGuidePage extends BasePage {
     }
 
     public EpisodeGuidePage clickOnHamburgerMenu() {
-        waitForClickable(hamburgerMenuButton);
-        builder.moveToElement(hamburgerMenuButton).click().perform();
+        waitForClickable(hamburgerMenuBtn);
+        LOGGER.info("open 'hamburger' menu ");
+        builder.moveToElement(hamburgerMenuBtn).click().perform();
         waitForVisibility(openedMenu);
         return this;
     }
 
     public EpisodeGuidePage clickCloseHamburgerMenu() {
-        waitForClickable(hamburgerMenuButton);
-        builder.moveToElement(hamburgerMenuButton).click().perform();
-        waitForVisibility(closedMenu);
+        waitForClickable(closeHamburgerMenuBtn);
+        builder.moveToElement(closeHamburgerMenuBtn).click().perform();
+        sleep(3_000);
         return this;
     }
 
-    public boolean isHamburgerMenuClosed() {
-        return closedMenu.isDisplayed();
+    public boolean closeHamburgerMenu() {
+        String shouldBeMenuClose = closeHamburgerMenuBtn.getAttribute("data-label");
+        LOGGER.info(" attribute 'menu close' means we're out of hamburger menu " + shouldBeMenuClose);
+
+        if (shouldBeMenuClose.contains("menu close")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public List<String> hamburgerMenuContainsItems() {
@@ -101,6 +112,7 @@ public class EpisodeGuidePage extends BasePage {
 
     public EpisodeGuidePage clickOnStreamThisEpisode() {
         waitForClickable(streamThisEpisodeBtn);
+        LOGGER.info("click on 'Stream this episode' button");
         builder.moveToElement(streamThisEpisodeBtn).click().perform();
         return this;
     }

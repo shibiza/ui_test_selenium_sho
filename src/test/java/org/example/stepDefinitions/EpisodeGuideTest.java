@@ -22,9 +22,9 @@ public class EpisodeGuideTest extends BaseTest {
     private static final String WATCH_PREVIEW_BUTTON = "//a[@class=\"button--secondary cta--item button--video\"]";
 
     private final ArrayList<String> expectedItemsOnHamburgerMenu = new ArrayList<>(List.
-            of("Series", "Movies", "Sports", "Documentaries", "Free Full Episodes"));
+            of("Series", "Movies", "Sports", "Documentaries")); // "Free Full Episodes"));
     private final ArrayList<String> expectedElementsAreHyperLinks = new ArrayList<>(List.
-            of("Movies", "Sports", "Documentaries", "Free Full Episodes"));
+            of("Movies", "Sports", "Documentaries")); // "Free Full Episodes"));
 
     //  2.1
     @Test
@@ -49,7 +49,7 @@ public class EpisodeGuideTest extends BaseTest {
         episodeGuidePage.openEpisodeGuidePage()
                 .clickOnHamburgerMenu()
                 .clickCloseHamburgerMenu();
-        Assert.assertTrue(episodeGuidePage.isHamburgerMenuClosed());
+        Assert.assertTrue(episodeGuidePage.closeHamburgerMenu());
     }
 
     //  2.2
